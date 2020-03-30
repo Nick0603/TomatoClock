@@ -32,7 +32,7 @@ function initPage(){
   var list;
   console.log("iniPage");
   list = getTodolist();
-  console.log(list);
+  //console.log(list);
     //console(list[3].name);
   for(var i =1;i<list.length;i++){
     console.log(list[i].name);

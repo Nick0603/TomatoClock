@@ -1,7 +1,10 @@
 import $ from 'jquery';
+import { finishTodolist, getTodolist } from './todolist';
 
 function init(){
     console.log('Hello World! Tomato!');
+    console.log(finishTodolist(2));
+    console.log(getTodolist());
 }
 
 window.onload = now_date;       //Uncaught ReferenceError: now_date is not defined at <anonymous>:1:1
