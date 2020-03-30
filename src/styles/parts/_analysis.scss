@@ -1,3 +1,56 @@
-#analysis{
+#analysis {
+  h3 {
+    position: absolute;
+    top: 80px;
+    left: 60px;
+    width: 200px;
+    height: 59px;
+    text-align: left;
+    font: Noto Sans TC;
+    font-size: 200%;
+    letter-spacing: 0;
+    color: #e8e8e8;
+    opacity: 1;
+  }
+  .report {
+    display: flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .date {
+    display: flexbox;
     
+    top: 179px;
+    left: 60px;
+    width: 32px;
+    height: 24px;
+    text-align: center;
+    font: Regular 16px/24px Noto Sans TC Regular;
+    letter-spacing: 0;
+    color: #e8e8e8;
+    opacity: 1;
+  }
+  .number {
+    top: 239px;
+    left: 60px;
+    width: 167px;
+    height: 101px;
+    text-align: center;
+    font: Fjalla One;
+    font-size: larger;
+    letter-spacing: 0;
+    color: #6c9460;
+    opacity: 1;
+  }
+  .status {
+    top: 340px;
+    left: 155px;
+    width: 64px;
+    height: 24px;
+    text-align: center;
+    font: Regular 16px/24px Noto Sans TC Regular;
+    letter-spacing: 0;
+    color: #e8e8e8;
+    opacity: 1;
+  }
 }
