@@ -7,6 +7,7 @@ import {
     faTimes,
     faBell,
     faPlus,
+    faPen,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -14,7 +15,8 @@ const icons = [
     faPause,
     faTimes,
     faBell,
-    faPlus
+    faPlus,
+    faPen,
 ];
 
 function init(){

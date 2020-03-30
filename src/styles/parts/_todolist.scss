@@ -1,128 +1,123 @@
 #todolist {
+  .content {
+    //background-color: burlywood;
+    padding: 40px 40px;
+  }
   .top {
     display: flex;
+    //background-color: blueviolet;
+    padding: 40px 0px 40px 0px;
     // justify-content: flex-start;
-    align-items: center;
-    margin-top: 80px;
-    margin-left: 40px;
+    //align-items: center;
+    //margin-top: 80px;
+    //margin-left: 40px;
     h1 {
       flex-grow: 2;
-
-      width: 160px;
-      height: 59px;
       text-align: left;
-      font: Medium 40px/59px Noto Sans TC;
-      letter-spacing: 0;
+      margin: 0px;
+      //letter-spacing: 0;
       color: #e8e8e8;
       opacity: 1;
     }
     a {
+      //background-color: brown;
       flex-grow: 1;
       text-align: left;
-      width: 48px;
-      height: 24px;
+      // width: 48px;
+      // height: 24px;
       align-self: center;
-      font: Regular 16px/24px Noto Sans TC Regular;
+      //font: Regular 16px/24px Noto Sans TC Regular;
       color: #e8e8e8;
     }
   }
-
   .add-container {
     display: flex;
     flex-direction: row;
+    padding: 0px 0px 40.5px 0px;
     input[type="text"] {
-      //flex-grow: 2;
       border: none;
       outline: none;
-      //margin-top: 40px;
-      margin-left: 40px;
       width: 560px;
       height: 56px;
       -webkit-border-radius: 28px;
       border-radius: 28px;
-      //border:none;
-      color:black;
+      color: black;
+      padding: 0px 0px 0px 30px;
     }
     button {
-      position:absolute;
-      right: 48px;
+      position: absolute;
+      right: 8px;
       top: 8px;
-      border:none;
-      height:40px;
-      width:48px;
-      border-radius:999px;
-      outline:none;
-      text-align:center;
-      font-weight:bold;
-      padding:2px;
-      background-color:$color-secondary;
+      border: none;
+      height: 40px;
+      width: 48px;
+      border-radius: 999px;
+      outline: none;
+      text-align: center;
+      font-weight: bold;
+      padding: 2px;
+      background-color: $color-secondary;
     }
   }
 
-  .itemBlock {
-    height: 75px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    background-color:blueviolet;
+  ul {
+    list-style: none;
   }
 
-  .item {
-    align-items: center;
-    align-self: center;
+  .item-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 73px;
+   
+    //padding: 20px 0px;
+    //background-color: cadetblue;
+    .block-left {
+      display: flex;
+      padding-top: 15.5px; 
+    }
+    .block-right {
+      display: flex;
+      padding-top: 19.5px; 
+      .fa-pen{
+        width: 16px;
+        height: 16.03px;
+        margin-right: 19px;
+      }
+      .fa-times{
+        width: 10;
+        height: 10;
+        margin-right: 7px;
+      }
+    }
+    .word {
+      padding-left: 16px;
+      box-sizing: border-box;
+      font-size: 16px;
+      
+    }
   }
-  input[type="checkbox"] {
-    margin-left: 40px;
-    
-    // //width:24px;
-    // //height:24px;
-    visibility: hidden;
-    cursor: pointer;
-    // position: relative;
-  }
-  input[type="checkbox"]::after {
+  .check-btn {
+    top:1px;
     width: 24px;
     height: 24px;
-    content: "";
-    background-color: $color-primary;
-    color: #e8e8e8;
-    display: inline-block;
-    visibility: visible;
     border-radius: 50%;
-    border-color: #e8e8e8;
-    border: 2px solid;
-  }
-  input[type="checkbox"]:checked:before {
-    content: "✓";
-    display: block;
-    //position: relative;
-    // top: 5px;
-    //left: 10px;
-    //width: 10px;
-    //height: 11px;
-    color: #fff;
-    font-weight: 400;
-    z-index: 1;
-  }
-  .word {
-    align-self: center;
-    flex: 1;
-    margin-left: 40px;
-    //margin-top: 24px;
+    background-color: transparent;
+    border: 2px solid white;
+    outline: none;
+    opacity: 1;
   }
 
   .separate {
-    margin-top: 40.5px;
-    margin-left: 40px;
-    margin-right: 40px;
+    //margin-left: 40px;
+    //margin-right: 40px;
     border: 1px solid #ffffff;
     opacity: 0.2;
   }
-  .separate2 {
-    margin-left: 40px;
-    margin-right: 40px;
-    border: 1px solid #ffffff;
-    opacity: 0.2;
-  }
+  //   .separate2 {
+  //     //margin-left: 40px;
+  //     //margin-right: 40px;
+  //     border: 1px solid #ffffff;
+  //     opacity: 0.2;
+  //   }
 }
