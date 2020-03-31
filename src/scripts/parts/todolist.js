@@ -2,8 +2,6 @@ import $ from "jquery";
 
 function init() {
   console.log("Hello World! Todolist!");
-  //放在裡面會執行兩次!?
-  //$("#add-button").click(addNote);
 }
 $("#add-button").click(addNote);
 initPage();
@@ -17,29 +15,23 @@ function getTodolist() {
   for (var i = 0; i < localStorage.length; i++) {
     Todolist.push(JSON.parse(localStorage.getItem(i)));
   }
-  //console.log(Todolist);
   return Todolist;
 }
 //api give an id and return event status
 function finishTodolist(id) {
   var TodolistJSON;
   TodolistJSON = JSON.parse(localStorage.getItem(id));
-  //console.log(TodolistJSON.status);
   return TodolistJSON.status;
 }
 
 function initPage(){
   var list;
-  console.log("iniPage");
   list = getTodolist();
-  console.log(list);
-    //console(list[3].name);
   for(var i =1;i<list.length;i++){
-    console.log(list[i].name);
     $('ul').append(createItem(list[i].id,list[i].name));
 
   }
-  //console.log(list[3].name);
+
 }
 
 
@@ -48,8 +40,6 @@ function addNote() {
   storeNote($("#add-text").val());
 }
 function storeNote(text) {
-  console.log(text);
-  //localStorage = window.localStorage;
   var id = localStorage.length;
   var itemJson = {
     id: id,
@@ -60,8 +50,6 @@ function storeNote(text) {
   };
   localStorage.setItem(id, JSON.stringify(itemJson));
   $('ul').append(createItem(id,text));
-  //console.log(JSON.parse(localStorage.getItem(id)));
-  //localStorage.clear();
 }
 function getCurrentTime() {
   var today = new Date();
@@ -75,8 +63,6 @@ function getCurrentTime() {
 }
 
 function createItem(id,name){
-  //乾這好煩OAQ
-  console.log("create");
   var li = document.createElement("li");
   li.setAttribute("class",id);
   var div_block = addDiv("item-block");
