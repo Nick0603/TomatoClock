@@ -7,16 +7,9 @@ function init() {
   initPage();
   $(".top-left .left").click(showNotFinishList);
   $(".top-left .right").click(showfinishList);
-  $("ul").on("click", ".edit", function() {
-    editItem($(this).attr("value"));
-  });
-  $("ul").on("click", ".delete", function() {
-    deleteItem($(this).attr("value"));
-  });
-  $("ul").on("click", ".check-btn", function() {
-    console.log("check");
-    checkItem($(this).attr("value"));
-  });
+  $("ul").on("click", ".edit", editItem);
+  $("ul").on("click", ".delete", deleteItem);
+  $("ul").on("click", ".check-btn", checkItem);
 }
 
 //api return all todo list in an array
@@ -113,20 +106,20 @@ function createItem(id, name, status) {
   var block_right = addDiv("block-right");
   var check_Btn;
   if (!status) {
-    check_Btn = addButton("check-btn", id);
-    check_Btn.appendChild(addCheck("check", id));
+      check_Btn = addButton("check-btn", id);
+      check_Btn.appendChild(addCheck("check", id));
   } else {
-    check_Btn = addButton("check-btn finished", id);
-    check_Btn.disabled = true;
-    check_Btn.appendChild(addCheck("check finished", id));
+      check_Btn = addButton("check-btn finished", id);
+      check_Btn.disabled = true;
+      check_Btn.appendChild(addCheck("check finished", id));
   }
   block_left.appendChild(check_Btn);
   if (!status) {
-    block_left.appendChild(addWord("word", name));
-    block_right.appendChild(addPen("edit"));
-    block_right.appendChild(addClose("delete", id));
+      block_left.appendChild(addWord("word", name));
+      block_right.appendChild(addPen("edit"));
+      block_right.appendChild(addClose("delete", id));
   } else {
-    block_left.appendChild(addWord("word finished", name));
+      block_left.appendChild(addWord("word finished", name));
   }
   div_block.appendChild(block_left);
   div_block.appendChild(block_right);
@@ -134,70 +127,78 @@ function createItem(id, name, status) {
   li.appendChild(addHr());
   return li;
 }
+
 function checkItem(id) {
+  var id = $(this).attr("value");
   if (setFinishTodolist(id)) {
-    $("li." + id).remove();
+      $("li." + id).remove();
   }
 }
 
 function setFinishTodolist(id) {
   var noteArray = getTodolist();
   for (var i = 0; i < noteArray.length; i++) {
-    if (noteArray[i].id == id) {
-      noteArray[i].status = true;
-      localStorage.setItem("noteStr", JSON.stringify(noteArray));
-      return true;
-    }
+      if (noteArray[i].id == id) {
+          noteArray[i].status = true;
+          localStorage.setItem("noteStr", JSON.stringify(noteArray));
+          return true;
+      }
   }
   return false;
 }
-function editItem(id) {
+
+function editItem() {
+  var id = $(this).attr("value");
   var noteArray = getTodolist();
   Swal.fire({
-    title: "請輸入修改記事",
-    input: "text",
-    showCancelButton: true,
-    inputValidator: value => {
-      if (!value) {
-        return "請輸入修改記事";
-      }
-    }
-  }).then(result => {
-    if (result.value) {
-      //console.log(result.value);
-      for (var i = 0; i < noteArray.length; i++) {
-        if (noteArray[i].id == id) {
-          if (newText) {
-            noteArray[i].name = result.value;
-            localStorage.setItem("noteStr", JSON.stringify(noteArray));
-            break;
+      title: "請輸入修改記事",
+      input: "text",
+      showCancelButton: true,
+      inputValidator: value => {
+          if (!value) {
+              return "請輸入修改記事";
           }
-        }
       }
-      initPage();
-    }
+  }).then(result => {
+      if (result.value) {
+          //console.log(result.value);
+          for (var i = 0; i < noteArray.length; i++) {
+              if (noteArray[i].id == id) {
+                  if (newText) {
+                      noteArray[i].name = result.value;
+                      localStorage.setItem("noteStr", JSON.stringify(noteArray));
+                      break;
+                  }
+              }
+          }
+          initPage();
+      }
   });
 }
-function deleteItem(id) {
+
+function deleteItem() {
+  var id = $(this).attr("value");
   $("li." + id).remove();
   var noteArray = [];
   noteArray = getTodolist();
   for (var i = 0; i < noteArray.length; i++) {
-    if (id == noteArray[i].id) {
-      noteArray.splice(i, 1);
-      localStorage.setItem("noteStr", JSON.stringify(noteArray));
-      if (noteArray.length == 0) {
-        localStorage.removeItem("noteStr");
+      if (id == noteArray[i].id) {
+          noteArray.splice(i, 1);
+          localStorage.setItem("noteStr", JSON.stringify(noteArray));
+          if (noteArray.length == 0) {
+              localStorage.removeItem("noteStr");
+          }
+          break;
       }
-      break;
-    }
   }
 }
+
 function addDiv(attr) {
   var div = document.createElement("div");
   div.setAttribute("class", attr);
   return div;
 }
+
 function addButton(attr, id) {
   var btn = document.createElement("button");
   btn.setAttribute("class", attr);
@@ -216,7 +217,7 @@ function addPen(attr) {
   var span = document.createElement("span");
   span.setAttribute("class", attr);
   span.innerHTML =
-    '<svg class="svg-inline--fa fa-pen fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"></path></svg>';
+      '<svg class="svg-inline--fa fa-pen fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"></path></svg>';
   return span;
 }
 
@@ -225,7 +226,7 @@ function addClose(attr, id) {
   span.setAttribute("class", attr);
   span.setAttribute("value", id);
   span.innerHTML =
-    '<svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>';
+      '<svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>';
   return span;
 }
 
@@ -240,7 +241,7 @@ function addCheck(attr, id) {
   span.setAttribute("class", attr);
   span.setAttribute("value", id);
   span.innerHTML =
-    '<svg class="svg-inline--fa fa-check fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>';
+      '<svg class="svg-inline--fa fa-check fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>';
   return span;
 }
 
