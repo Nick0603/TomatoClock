@@ -9,11 +9,15 @@ function getCurrentTime() {
     return dateTime;
 }
 
-function getTodolist() {
-    var Todolist = [];
-    Todolist = JSON.parse(localStorage.getItem("noteStr"));
-
-    return Todolist;
+function getTodolist(status) {
+    var data = JSON.parse(localStorage.getItem("noteStr"));
+    if(status == true){
+        return data.filter(row => row.status == true);
+    }
+    if(status == false){
+        return data.filter(row => row.status == false);
+    }
+    return data;
 }
 
 function setFinishTodolist(id) {

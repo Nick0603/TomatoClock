@@ -1,3 +1,17 @@
+import $ from "jquery";
+function renderList(array) {
+    if (!array) {
+        return;
+    }
+    $("ul").empty();
+    for (var i = 0; i < array.length; i++) {
+        var {id, name, status} = array[i];
+        $("ul").append(
+            createItem(id, name, status)
+        );
+    }
+}
+
 function createItem(id, name, status) {
     var li = document.createElement("li");
     li.setAttribute("class", id);
@@ -82,5 +96,6 @@ function addCheck(attr, id) {
 }
 
 export {
+    renderList,
     createItem
 }
