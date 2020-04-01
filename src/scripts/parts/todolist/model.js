@@ -11,6 +11,9 @@ function getCurrentTime() {
 
 function getTodolist(status) {
     var data = JSON.parse(localStorage.getItem("noteStr"));
+    if(!data){
+        return []
+    }
     if(status == true){
         return data.filter(row => row.status == true);
     }
@@ -20,16 +23,12 @@ function getTodolist(status) {
     return data;
 }
 
-function setFinishTodolist(id) {
-    var noteArray = getTodolist();
-    for (var i = 0; i < noteArray.length; i++) {
-        if (noteArray[i].id == id) {
-            noteArray[i].status = true;
-            localStorage.setItem("noteStr", JSON.stringify(noteArray));
-            return true;
-        }
+function saveTodolist(array){
+    if (array.length == 0) {
+        localStorage.removeItem("noteStr");
+    }else{
+        localStorage.setItem("noteStr", JSON.stringify(array));
     }
-    return false;
 }
 
 function storeNote(text, cb) {
@@ -61,6 +60,6 @@ function storeNote(text, cb) {
   
 export {
     getTodolist,
-    setFinishTodolist,
+    saveTodolist,
     storeNote
 }
