@@ -3,11 +3,11 @@ import { finishTodolist, getTodolist } from './todolist';
 
 function init(){
     console.log('Hello World! Tomato!');
-    console.log(finishTodolist(2));
+    //console.log(finishTodolist(2));
     console.log(getTodolist());
 }
 
-window.onload = now_date;       //Uncaught ReferenceError: now_date is not defined at <anonymous>:1:1
+window.onload = now_date;
 function now_date() {
     var now_datetime = new Date();
     var now_datetime_front = document.getElementById("now-datetime_front");
@@ -22,9 +22,8 @@ function now_date() {
     now_datetime_back.innerHTML = weekdays[now_datetime.getDay()]
         + (now_datetime.getHours() < 10 ? '0' : '') + now_datetime.getHours() + ":"
         + (now_datetime.getMinutes() < 10 ? '0' : '') + now_datetime.getMinutes();
-    setTimeout("now_date()", 1000);
-}       //load the initial time, didnt update, test by +"///"+now_datetime.getSeconds()
-
+    setTimeout(now_date, 1000);
+}
 
 //----------count down timer-----------
 
@@ -75,34 +74,43 @@ function stopCount() {
     countDownGoing = 0;
 }
 
+//---------initial and bell---------
+
 $(".green").hide();
+$("#bellSlash").hide();
+
+$("#bell").click(function() {
+    bellfunc(1);
+});
+$("#bellSlash").click(function() {
+    bellfunc(2);
+});
+
+function bellfunc(bellState) {
+    if(bellState == 1) {
+        $("#bellSlash").show();
+        $("#bell").hide();
+    }
+    else {
+        $("#bell").show();
+        $("#bellSlash").hide();
+    }
+}
+
 //---------orange mode------------
 
 function orangeMode() {
     $(".orange").show();
     $(".green").hide();
 }
-$("#orangeBell").click(function(){
-    orangeBellfunc();
-});
-var orangeBellState = 0;
-function orangeBellfunc() {
-    if(orangeBellState == 0) {
-        $("#orangeBell").attr("style","background-color: #F08448");
-        orangeBellState = 1;
-    }
-    else {
-        $("#orangeBell").attr("style","background-color: none");
-        orangeBellState = 0;
-    }
-}
-
-$("#orangePlay").click(function(){
+$("#orangePlay").click(function() {
+    // some feature
     orangeChangeState(1);
     countDownGoing = 0;
     startCount();
 });
-$("#orangePause").click(function(){
+
+$("#orangePause").click(function() {
     orangeChangeState(2);
     stopCount();
 });
@@ -116,13 +124,12 @@ function orangeChangeState(param) {
         $("#orangePlay").show();
     }
 }
-$("#orangeCancel").click(function(){
+$("#orangeCancel").click(function() {
     countDownNumber = 300;
     countDownTime.innerHTML = "05:00";
     stopCount();
     greenMode();
 });
-
 
 //------------green mode----------------
 
@@ -130,28 +137,13 @@ function greenMode() {
     $(".green").show();
     $(".orange").hide();
 }
-$("#greenBell").click(function(){
-    greenBellfunc();
-});
-var greenBellState = 0;
-function greenBellfunc() {
-    if(greenBellState == 0) {
-        $("#greenBell").attr("style","background-color: #6C9460");
-        greenBellState = 1;
-    }
-    else {
-        $("#greenBell").attr("style","background-color: none");
-        greenBellState = 0;
-    }
-}
 
-
-$("#greenPlay").click(function(){
+$("#greenPlay").click(function() {
     greenChangeState(1);
     countDownGoing = 0;
     startCount();
 });
-$("#greenPause").click(function(){
+$("#greenPause").click(function() {
     greenChangeState(2);
     stopCount();
 });
@@ -165,13 +157,12 @@ function greenChangeState(param) {
         $("#greenPlay").show();
     }
 }
-$("#greenCancel").click(function(){
+$("#greenCancel").click(function() {
     countDownNumber = 1500;
     countDownTime.innerHTML = "25:00";
     stopCount();
     orangeMode();
 });
-
 
 export {
     init

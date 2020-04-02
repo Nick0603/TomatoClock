@@ -23,6 +23,10 @@
 			background-color: $color-primary;
 			outline: none;
 		}
+		.bell:hover, .cancel:hover {
+			filter: brightness(2);
+		}
+
 		.bell {
 			left: 250px;
 		}
@@ -40,7 +44,69 @@
 			display: flex;
 			justify-content: center;
 			outline: none;
+			font-size: 22px;
 		}
+		.playAndPause:hover {
+			filter: brightness(0.8);
+		}
+		
+		.orange.playAndPause path{
+			color: $color-secondary2;
+		}
+		.green.playAndPause path{
+			color: $color-primary2;
+		}
+	}
+
+
+	.circleToCheck {
+		position: absolute;
+		border: 2px solid $color-light3;
+		border-radius: 50%;
+		outline: none;
+		left: 728px;
+		width: 24px;
+		height: 24px;
+		background-color: $color-primary;
+	}
+	.fourThings {
+		position: absolute;
+		left: 768px;
+		font-size: 16px;
+		color: $color-light3;
+		font-weight: 200;
+		//letter-spacing: 1.5px;
+		text-align: left;
+		height: 24px;
+		display: flex;
+		justify-content: center;
+		//background-color: $color-primary2;
+	}
+	.circleONE, .listONE {
+		top: 80px;
+	}
+	.circleTWO, .listTWO {
+		top: 152px;		//175
+	}
+	.circleTHREE, .listTHREE {
+		top: 197px;		//232
+	}
+
+	.circleFOUR, .listFOUR {
+		top: 242px;		//289
+	}
+	.circleONE {
+		//top: 84px;
+		width: 40px;
+		height: 40px;
+		left: 720px;
+	}
+	.listONE {
+		//top: 80px;		//80
+		left: 776px;
+		font-size: 32px;
+		height: 47px;
+		//background-color: $color-primary2;
 	}
 
 	.takeaBreak {
@@ -68,10 +134,11 @@
 		display: flex;
 		justify-content: center;
 		.tomatoImg {
-			position: absolute;
-			top: 505px;
+			position: fixed;
+			//top: 505px;
 			width: 991px;
 			height: 316px;
+			bottom: -2px;
 		}
 	}
 }

@@ -40,6 +40,9 @@
                 <i class="fas fa-play"></i>
                 <i class="fas fa-pause"></i>
                 <i class="fas fa-times"></i>
+                <i class="fa fa-pen"></i>
+                <i class="far fa-circle"></i>
+                <i class="fas fa-check"></i>
             </span>
             <span id="now-datetime_front" class="now-datetime front">2020.03.20</span>
             <span id="now-datetime_back"  class="now-datetime back">星期六13:38</span>
@@ -165,41 +168,61 @@
                 <div class="countDown">
                     <div id="clock" class="clock">25:00</div>
                     
-                    <button id="greenBell" class="green bell">
-                        <img src="./images/icon-bell.svg" alt="icon-bell.svg">
+                    <button id="bell" class="bell">
+                        <i class="fas fa-bell"></i>
                     </button>
-                    <button id="orangeBell" class="orange bell">
-                        <img src="./images/icon-bell.svg" alt="icon-bell.svg">
+                    <button id="bellSlash" class="bell">
+                        <i class="fas fa-bell-slash"></i>
                     </button>
-                    
                    
+
                     <button id="greenPause" class="green playAndPause">
-                        <img src="./images/icon-pause--green.svg" alt="icon-pause--green.svg">
+                        <i class="fas fa-pause"></i>
                     </button>
                     <button id="greenPlay" class="green playAndPause">
-                        <img src="./images/icon-play--green.svg" alt="icon-play--green.svg">
+                        <i class="fas fa-play"></i>
                     </button>
+                    <button id="greenCancel" class="green cancel">
+                        <i class="fas fa-times"></i>
+                    </button>
+
 
                     <button id="orangePause" class="orange playAndPause">
-                        <img src="./images/icon-pause--orange.svg" alt="icon-pause--orange.svg">
+                        <i class="fas fa-pause"></i>
                     </button>
                     <button id="orangePlay" class="orange playAndPause">
-                        <img src="./images/icon-play--orange.svg" alt="icon-play--orange.svg">
-                    </button>
-
-
-                    <button id="greenCancel" class="green cancel">
-                        <img  src="./images/icon-cancel.svg" alt="icon-cancel.svg">
+                        <i class="fas fa-play"></i>
                     </button>
                     <button id="orangeCancel" class="orange cancel">
-                        <img  src="./images/icon-cancel.svg" alt="icon-cancel.svg">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 
+
+                <ul class="orange">
+                    <li>
+                        <button class="circleToCheck circleONE"></button>
+                        <div class="fourThings listONE">構思蕃茄鐘 UI 介面</div>
+                    </li>
+                    <li>
+                        <button class="circleToCheck circleTWO"></button>
+                        <div class="fourThings listTWO">學習 Javascript</div>
+                    </li>
+                    <li>
+                        <button class="circleToCheck circleTHREE"></button>
+                        <div class="fourThings listTHREE">學習網頁切版</div>
+                    </li>
+                    <li>
+                        <button class="circleToCheck circleFOUR"></button>
+                        <div class="fourThings listFOUR">設計番茄鐘 UI 介面</div>
+                    </li>
+                </ul>
+                
                 <div class="green">
-                    <h2 class="takeaBreak">休息，</h2>
-                    <h3 class="nextEffort">是為了下一次的努力。</h3>
+                    <p class="takeaBreak">休息，</p>
+                    <p class="nextEffort">是為了下一次的努力。</p>
                 </div>
+
 
                 <div class="bottom">
                     <img id="greenTomatoImg" class="green tomatoImg" src="./images/tomato--green.svg" alt="tomato--green.svg">
