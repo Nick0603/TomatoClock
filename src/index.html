@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,500&display=swap&subset=chinese-traditional"
         rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <link rel="stylesheet" href="./index.css">
     <style>
         #demo svg {
@@ -42,7 +43,7 @@
                 <i class="fas fa-times"></i>
             </span>
             <span id="now-datetime_front" class="now-datetime front">2020.03.20</span>
-            <span id="now-datetime_back"  class="now-datetime back">星期六13:38</span>
+            <span id="now-datetime_back" class="now-datetime back">星期六13:38</span>
         </nav>
         <aside id="side-bar" class="side-bar">
             <a class="toggle-btn" href="#todolist">
@@ -130,8 +131,10 @@
                 <div class="content">
                     <div class="top">
                         <h1>待辦事項</h1>
-                        <a>未完成</a>
-                        <a>已完成</a>
+                        <div class="top-left">
+                            <button class="left">未完成</button>
+                            <button class="right">已完成</button>
+                        </div>
                     </div>
                     <div class="add-container">
                         <input type="text" id="add-text" placeholder="新增待辦事項">
@@ -141,38 +144,40 @@
                     </div>
                     <hr class="separate">
                     <ul class="item-list">
-                        <!-- <li>
+                        <li>
                             <div class="item-block">
                                 <div class="block-left">
-                                    <button class="check-btn"></button>
+                                    <button class="check-btn finished">
+                                        <span class="check finished"><i class="fas fa-check"></i></span>
+                                    </button>
                                     <h3 class="word">構思番茄鐘UI介面</h3>
                                 </div>
                                 <div class="block-right">
-                                    <span class="pen"><i class="fas fa-pen"></i></span>
-                                    <span class="close"><i class="fas fa-times"></i></span>
+                                    <span class="edit"><i class="fas fa-pen"></i></span>
+                                    <span class="delete"><i class="fas fa-times"></i></span>
                                 </div>
-                                
+
                             </div>
                             <hr class=" separate">
-                        </li> -->
+                        </li>
 
                     </ul>
-                    
+
                 </div>
             </div>
             <div id="tomato" class="tomato">
-               <!--<h3>Hello Tomato</h3>-->
+                <!--<h3>Hello Tomato</h3>-->
                 <div class="countDown">
                     <div id="clock" class="clock">25:00</div>
-                    
+
                     <button id="greenBell" class="green bell">
                         <img src="./images/icon-bell.svg" alt="icon-bell.svg">
                     </button>
                     <button id="orangeBell" class="orange bell">
                         <img src="./images/icon-bell.svg" alt="icon-bell.svg">
                     </button>
-                    
-                   
+
+
                     <button id="greenPause" class="green playAndPause">
                         <img src="./images/icon-pause--green.svg" alt="icon-pause--green.svg">
                     </button>
@@ -189,23 +194,26 @@
 
 
                     <button id="greenCancel" class="green cancel">
-                        <img  src="./images/icon-cancel.svg" alt="icon-cancel.svg">
+                        <img src="./images/icon-cancel.svg" alt="icon-cancel.svg">
                     </button>
                     <button id="orangeCancel" class="orange cancel">
-                        <img  src="./images/icon-cancel.svg" alt="icon-cancel.svg">
+                        <img src="./images/icon-cancel.svg" alt="icon-cancel.svg">
                     </button>
                 </div>
-                
+
                 <div class="green">
                     <h2 class="takeaBreak">休息，</h2>
                     <h3 class="nextEffort">是為了下一次的努力。</h3>
                 </div>
 
                 <div class="bottom">
-                    <img id="greenTomatoImg" class="green tomatoImg" src="./images/tomato--green.svg" alt="tomato--green.svg">
-                    <img id="orangeTomatoImg" class="orange tomatoImg" src="./images/tomato--orange.svg" alt="tomato--orange.svg">
+                    <img id="greenTomatoImg" class="green tomatoImg" src="./images/tomato--green.svg"
+                        alt="tomato--green.svg">
+                    <img id="orangeTomatoImg" class="orange tomatoImg" src="./images/tomato--orange.svg"
+                        alt="tomato--orange.svg">
                 </div>
-            </div><!--<h3>Hello Tomato</h3>-->
+            </div>
+            <!--<h3>Hello Tomato</h3>-->
         </main>
     </div>
     <script src="./index.js"></script>
