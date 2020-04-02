@@ -1,12 +1,10 @@
 import $ from 'jquery';
-import { finishTodolist, getTodolist } from './todolist';
-
-
+import { getTodolistByStatus, getTodolist } from './todolist';
 
 function init(){
     console.log('Hello World! Analysis!');
-    //console.log(finishTodolist(2));
-    console.log(getTodolist());
+    //console.log(getTodolist());
+    //console.log(getTodolistByStatus(true));
 }
 
 export {

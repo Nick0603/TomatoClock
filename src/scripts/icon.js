@@ -8,6 +8,7 @@ import {
     faBell,
     faPlus,
     faPen,
+    faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -17,6 +18,7 @@ const icons = [
     faBell,
     faPlus,
     faPen,
+    faCheck,
 ];
 
 function init(){

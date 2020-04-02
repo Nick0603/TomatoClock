@@ -1,131 +1,90 @@
 import $ from "jquery";
+import {
+    renderList,
+    createItem
+} from "./todolist/view";
+import {
+    storeNote,
+    getTodolist,
+    deleteItemById,
+    setFinishTodolist,
+    editItemById,
+    getTodolistByStatus
+} from "./todolist/model";
 
 function init() {
-  console.log("Hello World! Todolist!");
-}
-$("#add-button").click(addNote);
-initPage();
-$('.block-right .pen').click(function(){console.log("pen");});
-$('.block-right .close').click(function (){
-  deleteItem($(this).attr("value"));
-});
-//api return all todo list in an array
-function getTodolist() {
-  var Todolist = [];
-  for (var i = 0; i < localStorage.length; i++) {
-    Todolist.push(JSON.parse(localStorage.getItem(i)));
-  }
-  return Todolist;
-}
-//api give an id and return event status
-function finishTodolist(id) {
-  var TodolistJSON;
-  TodolistJSON = JSON.parse(localStorage.getItem(id));
-  return TodolistJSON.status;
+    //初始化頁面
+    showNotFinishList();
+    $(".top-left .left").click(showNotFinishList);
+    $(".top-left .right").click(showfinishList);
+    $("#add-button").click(addNote);
+    $("ul").on("click", ".edit", editItem);
+    $("ul").on("click", ".delete", deleteItem);
+    $("ul").on("click", ".check-btn", checkItem);
 }
 
-function initPage(){
-  var list;
-  list = getTodolist();
-  for(var i =1;i<list.length;i++){
-    $('ul').append(createItem(list[i].id,list[i].name));
-
-  }
-
+function showNotFinishList() {
+    $(".top-left .left").css("opacity", "0.5");
+    $(".top-left .right").css("opacity", "1");
+    var status = false;
+    var noteArray = getTodolistByStatus(status);
+    renderList(noteArray);
 }
 
-
+function showfinishList() {
+    $(".top-left .left").css("opacity", "1");
+    $(".top-left .right").css("opacity", "0.5");
+    var status = true;
+    var noteArray = getTodolistByStatus(status);
+    renderList(noteArray);
+}
 
 function addNote() {
-  storeNote($("#add-text").val());
-}
-function storeNote(text) {
-  var id = localStorage.length;
-  var itemJson = {
-    id: id,
-    name: text,
-    status: false,
-    createAt: getCurrentTime(),
-    finishAt: null
-  };
-  localStorage.setItem(id, JSON.stringify(itemJson));
-  $('ul').append(createItem(id,text));
-}
-function getCurrentTime() {
-  var today = new Date();
-  var date =
-    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  var time =
-    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date + " " + time;
-
-  return dateTime;
-}
-
-function createItem(id,name){
-  var li = document.createElement("li");
-  li.setAttribute("class",id);
-  var div_block = addDiv("item-block");
-  var block_left = addDiv("block-left");
-  var block_right = addDiv("block-right");
-  block_left.appendChild(addButton("check-btn"));
-  block_left.appendChild(addWord("word",name));
-  block_right.appendChild(addPen("pen"));
-  block_right.appendChild(addClose("close",id));
-  div_block.appendChild(block_left);
-  div_block.appendChild(block_right);
-  li.appendChild(div_block);
-  li.appendChild(addHr());
-  return li;
-}
-
-function deleteItem(id){
-  console.log(id);
-  $("li."+id).remove();
-  for(var i = 1;i<localStorage.length;i++){
-    if(i==id){
-      localStorage.removeItem(i);
-      break;
+    var inputValue = $("#add-text").val();
+    $("#add-text").val("");
+    if (inputValue == "") {
+        return ;
     }
-  }
+    storeNote(inputValue);
+    showNotFinishList();
 }
 
-function addDiv(attr){
-  var div = document.createElement("div");
-  div.setAttribute("class",attr);
-  return div;
-}
-function addButton(attr){
-  var btn = document.createElement("button");
-  btn.setAttribute("class",attr);
-  return btn;
+function checkItem(id) {
+    var id = $(this).attr("value");
+    if (setFinishTodolist(id)) {
+        showNotFinishList();
+    }
 }
 
-function addWord(attr, name){
-  var word = document.createElement("h3");
-  word.setAttribute("class",attr);
-  word.innerHTML=name;
-  return word;
+function editItem() {
+    var id = $(this).attr("value");
+    Swal.fire({
+        title: "請輸入修改記事",
+        input: "text",
+        showCancelButton: true,
+        inputValidator: value => {
+            if (!value) {
+                return "請輸入修改記事";
+            }
+        }
+    }).then(result => {
+        if (!result.value) {
+            return ;
+        }
+        editItemById(id, result.value);
+        showNotFinishList();
+    });
 }
 
-function addPen(attr){
-  var span = document.createElement("span");
-  span.setAttribute("class",attr);
-  span.innerHTML='<svg class="svg-inline--fa fa-pen fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"></path></svg>';
-  return span
+function deleteItem(id) {
+    var id = $(this).attr("value");
+    deleteItemById(id);
+    showNotFinishList();
 }
 
-function addClose(attr,id){
-  var span = document.createElement("span");
-  span.setAttribute("class",attr);
-  span.setAttribute("value",id);
-  span.innerHTML='<svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>'
-  return span;
-}
-
-function addHr(){
-  var hr = document.createElement("hr");
-  hr.setAttribute("class","separate");
-  return hr;
-}
-export { init, finishTodolist, getTodolist };
+export {
+    init,
+    getTodolist,
+    getTodolistByStatus,
+    setFinishTodolist
+};

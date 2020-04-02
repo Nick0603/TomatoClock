@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { finishTodolist, getTodolist } from './todolist';
+import { setFinishTodolist, getTodolistByStatus } from './todolist';
 
 function init(){
-    console.log('Hello World! Tomato!');
-    //console.log(finishTodolist(2));
-    console.log(getTodolist());
+    //輸入 id 則會將該id的status改成true,成功回傳true,失敗回傳false
+    //console.log(setFinishTodolist(id));
+    console.log(getTodolistByStatus(false));
 }
 
 window.onload = now_date;
