@@ -1,33 +1,38 @@
 #todolist {
+  position: absolute;
+  z-index: 10;
   .content {
-    //background-color: burlywood;
     padding: 40px 40px;
   }
   .top {
     display: flex;
-    //background-color: blueviolet;
+    justify-content: space-between;
     padding: 40px 0px 40px 0px;
-    // justify-content: flex-start;
-    //align-items: center;
-    //margin-top: 80px;
-    //margin-left: 40px;
     h1 {
-      flex-grow: 2;
-      text-align: left;
+      display: flex;
       margin: 0px;
-      //letter-spacing: 0;
       color: #e8e8e8;
       opacity: 1;
     }
-    a {
-      //background-color: brown;
-      flex-grow: 1;
-      text-align: left;
-      // width: 48px;
-      // height: 24px;
-      align-self: center;
-      //font: Regular 16px/24px Noto Sans TC Regular;
-      color: #e8e8e8;
+    .top-left {
+      display: flex;
+
+      button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        outline: none;
+        &.left {
+          padding-right: 40px;
+        }
+        &.right {
+          opacity: 0.5;
+          cursor: pointer;
+        }
+      }
+      button:hover {
+        font-weight: bold;
+      }
     }
   }
   .add-container {
@@ -57,6 +62,7 @@
       font-weight: bold;
       padding: 2px;
       background-color: $color-secondary;
+      cursor: pointer;
     }
   }
 
@@ -69,55 +75,63 @@
     flex-direction: row;
     justify-content: space-between;
     height: 73px;
-   
-    //padding: 20px 0px;
-    //background-color: cadetblue;
     .block-left {
       display: flex;
-      padding-top: 15.5px; 
+      padding-top: 16.5px;
     }
     .block-right {
       display: flex;
-      padding-top: 19.5px; 
-      .fa-pen{
+      padding-top: 19.5px;
+      .fa-pen {
         width: 16px;
         height: 16.03px;
         margin-right: 19px;
+        cursor: pointer;
       }
-      .fa-times{
+      .fa-times {
         width: 10;
         height: 10;
         margin-right: 7px;
+        cursor: pointer;
       }
     }
+
     .word {
       padding-left: 16px;
-      box-sizing: border-box;
+      padding-top: 4px;
+      //box-sizing: border-box;
       font-size: 16px;
-      
+      &.finished {
+        text-decoration: line-through;
+        opacity: 0.5;
+      }
     }
   }
   .check-btn {
-    top:1px;
+    top: 1px;
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background-color: transparent;
+    background-color: $color-primary;
     border: 2px solid white;
     outline: none;
-    opacity: 1;
+    cursor: pointer;
+    .check {
+      opacity: 0;
+      &.finished {
+        opacity: 1;
+      }
+    }
+    :hover {
+      opacity: 1;
+    }
+    &.finished{
+      opacity: 0.5;
+    }
   }
 
   .separate {
-    //margin-left: 40px;
-    //margin-right: 40px;
     border: 1px solid #ffffff;
     opacity: 0.2;
   }
-  //   .separate2 {
-  //     //margin-left: 40px;
-  //     //margin-right: 40px;
-  //     border: 1px solid #ffffff;
-  //     opacity: 0.2;
-  //   }
 }
