@@ -58,7 +58,9 @@
 		}
 	}
 
-
+	.theListStyle {
+		list-style: none;
+	}
 	.circleToCheck {
 		position: absolute;
 		border: 2px solid $color-light3;
