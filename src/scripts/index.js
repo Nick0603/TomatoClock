@@ -6,9 +6,9 @@ import * as icon from './icon';
 import $ from 'jquery';
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core'; // 拿來 load icon
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fas, faPen } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
-import { faPen } from '@fortawesome/free-solid-svg-icons/faPen';
+
 
 $('document').ready(function(){
     analysis.init();

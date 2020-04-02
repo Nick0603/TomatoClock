@@ -9,6 +9,7 @@ import {
     faPlus,
     faPen,
     faCheck,
+    faBellSlash,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -19,6 +20,7 @@ const icons = [
     faPlus,
     faPen,
     faCheck,
+    faBellSlash,
 ];
 
 function init(){

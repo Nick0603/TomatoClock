@@ -77,12 +77,10 @@
 		font-size: 16px;
 		color: $color-light3;
 		font-weight: 200;
-		//letter-spacing: 1.5px;
 		text-align: left;
 		height: 24px;
 		display: flex;
 		justify-content: center;
-		//background-color: $color-primary2;
 	}
 	.circleONE, .listONE {
 		top: 80px;
@@ -98,17 +96,14 @@
 		top: 242px;		//289
 	}
 	.circleONE {
-		//top: 84px;
 		width: 40px;
 		height: 40px;
 		left: 720px;
 	}
 	.listONE {
-		//top: 80px;		//80
 		left: 776px;
 		font-size: 32px;
 		height: 47px;
-		//background-color: $color-primary2;
 	}
 
 	.takeaBreak {
@@ -137,7 +132,6 @@
 		justify-content: center;
 		.tomatoImg {
 			position: fixed;
-			//top: 505px;
 			width: 991px;
 			height: 316px;
 			bottom: -2px;
