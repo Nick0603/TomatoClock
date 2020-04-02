@@ -1,60 +1,87 @@
+function getTodolist() {
+    var todolist = JSON.parse(localStorage.getItem("noteStr"));
+    if(!todolist){
+        return [];
+    }
+    return todolist;
+}
+
+function getTodolistByStatus(status){
+    var noteArray = getTodolist();
+    var output = [];
+    for (var i = 0; i < noteArray.length; i++) {
+        var row = noteArray[i];
+        if (row.status == status) {
+            output.push(row);
+        }
+    }
+    return output;
+}
+
+function saveTodolist(array) {
+    if (array.length == 0) {
+        localStorage.removeItem("noteStr");
+    }else{
+        localStorage.setItem("noteStr", JSON.stringify(array));
+    }
+}
+
 function setFinishTodolist(id) {
     var noteArray = getTodolist();
     for (var i = 0; i < noteArray.length; i++) {
         if (noteArray[i].id == id) {
             noteArray[i].status = true;
-            localStorage.setItem("noteStr", JSON.stringify(noteArray));
             return true;
         }
     }
+    saveTodolist(noteArray);
     return false;
 }
 
-//api return all todo list in an array
-function getTodolist() {
-    var Todolist = [];
-    Todolist = JSON.parse(localStorage.getItem("noteStr"));
-
-    return Todolist;
-}
-
-function deleteItemById(id){
-    var noteArray = [];
-    noteArray = getTodolist();
+function editItemById(id, text){
+    var noteArray = getTodolist();
     for (var i = 0; i < noteArray.length; i++) {
-        if (id == noteArray[i].id) {
-            noteArray.splice(i, 1);
-            localStorage.setItem("noteStr", JSON.stringify(noteArray));
-            if (noteArray.length == 0) {
-                localStorage.removeItem("noteStr");
-            }
+        if (noteArray[i].id == id) {
+            noteArray[i].name = text;
             break;
         }
     }
+    saveTodolist(noteArray);
+}
+
+function deleteItemById(id){
+    var noteArray = getTodolist();
+    for (var i = 0; i < noteArray.length; i++) {
+        if (id == noteArray[i].id) {
+            noteArray.splice(i, 1);
+            break;
+        }
+    }
+    saveTodolist(noteArray);
+}
+
+function getNextId(array){
+    var id = 1;
+    if(!array && array.length == 0){
+        return id;
+    }
+    return array[array.length - 1].id + 1;
 }
 
 function storeNote(text) {
-    var noteArray = [];
+    var noteArray = getTodolist();
     var createTime = getCurrentTime();
-    var id = 1;
-    if (localStorage.getItem("noteStr") != null) {
-        noteArray = JSON.parse(localStorage.getItem("noteStr"));
-        id = noteArray[noteArray.length - 1].id + 1;
-    }
-    var noteJson = {
-        id: id,
+    var nextId = getNextId(noteArray);
+    var newNote = {
+        id: nextId,
         name: text,
         status: false,
         createAt: createTime,
         finishAt: null
     };
-    noteArray.push(noteJson);
-    localStorage.setItem("noteStr", JSON.stringify(noteArray));
-    return {
-        id: id,
-        text: text,
-        status: false
-    }
+    noteArray.push(newNote);
+    saveTodolist(noteArray);
+    return newNote;
 }
 
 function getCurrentTime() {
@@ -68,22 +95,11 @@ function getCurrentTime() {
     return dateTime;
 }
 
-
-function editItemById(id, text){
-    var noteArray = getTodolist();
-    for (var i = 0; i < noteArray.length; i++) {
-        if (noteArray[i].id == id) {
-            noteArray[i].name = text;
-            localStorage.setItem("noteStr", JSON.stringify(noteArray));
-            break;
-        }
-    }
-}
-
 export {
     storeNote,
     setFinishTodolist,
     deleteItemById,
     getTodolist,
-    editItemById
+    editItemById,
+    getTodolistByStatus
 }

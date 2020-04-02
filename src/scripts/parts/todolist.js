@@ -1,88 +1,63 @@
 import $ from "jquery";
-import {createItem} from "./todolist/view";
+import {
+    renderList,
+    createItem
+} from "./todolist/view";
 import {
     storeNote,
     getTodolist,
     deleteItemById,
     setFinishTodolist,
-    editItemById
+    editItemById,
+    getTodolistByStatus
 } from "./todolist/model";
 
 function init() {
-    console.log("Hello World! Todolist!");
-    $("#add-button").click(addNote);
     //初始化頁面
-    initPage();
+    showNotFinishList();
     $(".top-left .left").click(showNotFinishList);
     $(".top-left .right").click(showfinishList);
-    $("ul").on("click", ".edit", function () {
-        editItem($(this).attr("value"));
-    });
-    $("ul").on("click", ".delete", function () {
-        deleteItem($(this).attr("value"));
-    });
-    $("ul").on("click", ".check-btn", function () {
-        checkItem($(this).attr("value"));
-    });
+    $("#add-button").click(addNote);
+    $("ul").on("click", ".edit", editItem);
+    $("ul").on("click", ".delete", deleteItem);
+    $("ul").on("click", ".check-btn", checkItem);
 }
-
-function initPage() {
-    var noteArray = [];
-    noteArray = getTodolist();
-    $("ul").empty();
-    if (noteArray != null) {
-        for (var i = 0; i < noteArray.length; i++) {
-            if (!noteArray[i].status) {
-                $("ul").append(
-                    createItem(noteArray[i].id, noteArray[i].name, noteArray[i].status)
-                );
-            }
-        }
-    }
-}
-
-function addNote() {
-    // 取新增的資料
-    var inputValue = $("#add-text").val();
-    $("#add-text").val("");
-    // 防呆
-    if (inputValue == "") {
-        return ;
-    }
-    var params = storeNote(inputValue);
-    $("ul").append(createItem(params.id, params.text, params.status));
-}
-
 
 function showNotFinishList() {
     $(".top-left .left").css("opacity", "0.5");
     $(".top-left .right").css("opacity", "1");
-    initPage();
+    var status = false;
+    var noteArray = getTodolistByStatus(status);
+    renderList(noteArray);
 }
+
 function showfinishList() {
     $(".top-left .left").css("opacity", "1");
     $(".top-left .right").css("opacity", "0.5");
-    //清空list
-    $("ul").empty();
-    //apend list
-    var noteArray = getTodolist();
-    for (var i = 0; i < noteArray.length; i++) {
-        if (noteArray[i].status) {
-            $("ul").append(
-                createItem(noteArray[i].id, noteArray[i].name, noteArray[i].status)
-            );
-        }
+    var status = true;
+    var noteArray = getTodolistByStatus(status);
+    renderList(noteArray);
+}
+
+function addNote() {
+    var inputValue = $("#add-text").val();
+    $("#add-text").val("");
+    if (inputValue == "") {
+        return ;
     }
+    storeNote(inputValue);
+    showNotFinishList();
 }
 
 function checkItem(id) {
+    var id = $(this).attr("value");
     if (setFinishTodolist(id)) {
-        $("li." + id).remove();
+        showNotFinishList();
     }
 }
 
-
-function editItem(id) {
+function editItem() {
+    var id = $(this).attr("value");
     Swal.fire({
         title: "請輸入修改記事",
         input: "text",
@@ -97,13 +72,19 @@ function editItem(id) {
             return ;
         }
         editItemById(id, result.value);
-        initPage();
+        showNotFinishList();
     });
 }
 
 function deleteItem(id) {
-    $("li." + id).remove();
+    var id = $(this).attr("value");
     deleteItemById(id);
+    showNotFinishList();
 }
 
-export { init, setFinishTodolist };
+export {
+    init,
+    getTodolist,
+    getTodolistByStatus,
+    setFinishTodolist
+};
