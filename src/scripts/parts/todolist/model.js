@@ -28,13 +28,17 @@ function saveTodolist(array) {
 
 function setFinishTodolist(id) {
     var noteArray = getTodolist();
+    var isUpdated = false;
     for (var i = 0; i < noteArray.length; i++) {
         if (noteArray[i].id == id) {
             noteArray[i].status = true;
-            return true;
+            isUpdated = true;
         }
     }
-    saveTodolist(noteArray);
+    if(isUpdated){
+        saveTodolist(noteArray);
+        return true;
+    }
     return false;
 }
 
@@ -62,7 +66,7 @@ function deleteItemById(id){
 
 function getNextId(array){
     var id = 1;
-    if(!array && array.length == 0){
+    if(array.length == 0){
         return id;
     }
     return array[array.length - 1].id + 1;

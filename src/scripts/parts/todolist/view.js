@@ -1,4 +1,5 @@
 import $ from "jquery";
+import {init as iconInit} from '../../icon';
 
 function renderList(array){
     $("#todolist ul").empty();
@@ -7,7 +8,45 @@ function renderList(array){
         $("#todolist ul").append(
             createItem(id, name, status)
         );
+        iconInit();
     }
+}
+
+// demo
+function createItem2(id, name, status){
+    var isFinish = status == true;
+    if(isFinish){
+        return `
+            <li class="${id}">
+                <div class="item-block">
+                    <div class="block-left">
+                        <button value="${id}" class="check-btn finished">
+                            <span value="${id}" class="check finished"><i class="fas fa-check"></i></span>
+                        </button>
+                        <h3 class="word finished">${name}</h3>
+                    </div>
+                </div>
+                <hr class=" separate">
+            </li>
+        `
+    }
+    return `
+        <li class="${id}">
+            <div class="item-block">
+                <div class="block-left">
+                    <button value="${id}" class="check-btn">
+                        <span value="${id}" class="check"><i class="fas fa-check"></i></span>
+                    </button>
+                    <h3 class="word">${name}</h3>
+                </div>
+                <div class="block-right">
+                    <span value="${id}" class="edit"><i class="fas fa-pen"></i></span>
+                    <span value="${id}" class="delete"><i class="fas fa-times"></i></span>
+                </div>
+            </div>
+            <hr class=" separate">
+        </li>
+    `
 }
 
 function createItem(id, name, status) {
