@@ -22,6 +22,7 @@
 			justify-content: center;
 			background-color: $color-primary;
 			outline: none;
+			cursor: pointer;
 		}
 		.bell:hover, .cancel:hover {
 			filter: brightness(2);
@@ -45,11 +46,11 @@
 			justify-content: center;
 			outline: none;
 			font-size: 22px;
+			cursor: pointer;
 		}
 		.playAndPause:hover {
 			filter: brightness(0.8);
 		}
-		
 		.orange.playAndPause path{
 			color: $color-secondary2;
 		}
@@ -60,7 +61,6 @@
 
 	.theListStyle {
 		list-style: none;
-
 		.circleToCheck {
 			position: absolute;
 			border: 2px solid $color-light3;
@@ -69,6 +69,7 @@
 			width: 24px;
 			height: 24px;
 			background-color: $color-primary;
+			cursor: pointer;
 			.finishCheck {
 				opacity: 0;
 			}
@@ -109,7 +110,6 @@
 			left: 776px;
 			font-size: 32px;
 		}
-
 	}
 
 	.takeaBreak {
