@@ -1,11 +1,18 @@
 import $ from 'jquery';
-import { setFinishTodolist, getTodolistByStatus } from './todolist';
+import { setFinishTodolist, getTodolistByStatus, getTodolist } from './todolist';
 
 function init(){
     //輸入 id 則會將該id的status改成true,成功回傳true,失敗回傳false
-    //console.log(setFinishTodolist(id));
-    console.log(getTodolistByStatus(false));
-    window.onload = nowDate;
+    
+    //------要整理code
+    
+    outputTodolist();
+    $("#add-button").on("click", function() {
+        outputTodolist();
+    });
+
+    //window.onload = nowDate;
+    $(function(){nowDate();})
     $(".green").hide();
     $("#bellSlash").hide();
 }
@@ -159,6 +166,52 @@ $("#greenCancel").click(function() {
     stopCount();
     orangeMode();
 });
+
+function outputTodolist() {     //NULL 時不顯示 、一定要重新整理，無法自動更新(刪除、完成時) (新增可以
+    var notFinish = getTodolistByStatus(0);
+    
+    for (var i = 0; i < notFinish.length; i++) {
+        var readObject = notFinish[i];
+        $.each(readObject, function(key, value) {
+           if (key == "name") {
+                    if (i == 0) {
+                        $("#listONE").html(value);
+                    }
+                    else if (i == 1) {
+                        $("#listTWO").html(value);
+                    }
+                    else if (i == 2) {
+                        $("#listTHREE").html(value);
+                    }
+                    else if (i == 3) {
+                        $("#listFOUR").html(value);
+                    }
+            }
+        });
+    }
+}
+$("#finishCheckONE").click(function() {
+    setFinish(0);
+});
+$("#finishCheckTWO").click(function() {        
+    setFinish(1);
+});
+$("#finishCheckTHREE").click(function() {        
+    setFinish(2);
+});
+$("#finishCheckFOUR").click(function() {        
+    setFinish(3);
+});
+
+function setFinish(whichOneFinish) {
+    var notFinish = getTodolistByStatus(0);
+    var readObject = notFinish[whichOneFinish];
+    $.each(readObject, function(key, value) {
+       if (key == "id") {
+            var taskFinish = setFinishTodolist(value);
+        }
+    });     
+}
 
 export {
     init

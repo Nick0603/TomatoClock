@@ -60,50 +60,56 @@
 
 	.theListStyle {
 		list-style: none;
-	}
-	.circleToCheck {
-		position: absolute;
-		border: 2px solid $color-light3;
-		border-radius: 50%;
-		outline: none;
-		left: 728px;
-		width: 24px;
-		height: 24px;
-		background-color: $color-primary;
-	}
-	.fourThings {
-		position: absolute;
-		left: 768px;
-		font-size: 16px;
-		color: $color-light3;
-		font-weight: 200;
-		text-align: left;
-		height: 24px;
-		display: flex;
-		justify-content: center;
-	}
-	.circleONE, .listONE {
-		top: 80px;
-	}
-	.circleTWO, .listTWO {
-		top: 152px;		//175
-	}
-	.circleTHREE, .listTHREE {
-		top: 197px;		//232
-	}
 
-	.circleFOUR, .listFOUR {
-		top: 242px;		//289
-	}
-	.circleONE {
-		width: 40px;
-		height: 40px;
-		left: 720px;
-	}
-	.listONE {
-		left: 776px;
-		font-size: 32px;
-		height: 47px;
+		.circleToCheck {
+			position: absolute;
+			border: 2px solid $color-light3;
+			border-radius: 50%;
+			outline: none;
+			width: 24px;
+			height: 24px;
+			background-color: $color-primary;
+			.finishCheck {
+				opacity: 0;
+			}
+			:hover {
+				opacity: 1;
+			}
+			.checkONE svg {
+				font-size: 27px;
+			}
+		}
+		
+		.fourThings {
+			position: absolute;
+			left: 40px;
+			font-size: 16px;
+			color: $color-light3;
+			font-weight: 200;
+			text-align: left;
+			padding-top: 3px;
+			display: flex;
+			justify-content: center;
+		}
+		.littleList {
+			top: 175px;
+			height: 57px;
+			left: 728px;
+		}
+		.bigList {
+			top: 80px;
+		}
+
+		.circleONE {
+			width: 40px;
+			height: 40px;
+			left: 720px;
+		}
+		#listONE {
+			left: 776px;
+			font-size: 32px;
+		}
+
 	}
 
 	.takeaBreak {
@@ -127,7 +133,7 @@
 		letter-spacing: 2px;
 	}
 
-	.bottom {
+	.bottomPic {
 		display: flex;
 		justify-content: center;
 		.tomatoImg {
