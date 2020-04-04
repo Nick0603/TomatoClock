@@ -32,6 +32,7 @@ function setFinishTodolist(id) {
     for (var i = 0; i < noteArray.length; i++) {
         if (noteArray[i].id == id) {
             noteArray[i].status = true;
+            noteArray[i].finishAt = getCurrentTime();
             isUpdated = true;
         }
     }
