@@ -58,10 +58,13 @@ function checkItem(id) {
 
 function editItem() {
     var id = $(this).attr("value");
+    var text = $('li.'+ id +' .word').text();
     Swal.fire({
         title: "請輸入修改記事",
         input: "text",
+        inputValue:text,
         showCancelButton: true,
+        heightAuto:false,
         inputValidator: value => {
             if (!value) {
                 return "請輸入修改記事";

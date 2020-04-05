@@ -68,6 +68,9 @@
 
   ul {
     list-style: none;
+    overflow: auto;
+    height:584px;
+    //-webkit-overflow-scrolling: touch;
   }
 
   .item-block {
