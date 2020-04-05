@@ -18,5 +18,4 @@ $('document').ready(function(){
     library.add(fas);
     library.add(far);
     icon.init();
-    dom.i2svg();
 })
