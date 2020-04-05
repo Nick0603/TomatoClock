@@ -1,14 +1,12 @@
 body {
     background-color: #000;
     width: 100%;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-
     >.container {
         width: 100%;
-        height: 100%;
+        height: 100vh;
         max-width: 1440px;
         max-height: 900px;
         overflow: hidden;
