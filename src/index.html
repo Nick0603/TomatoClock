@@ -8,8 +8,9 @@
     <link href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,500&display=swap&subset=chinese-traditional"
         rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <link rel="stylesheet" href="./index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js"></script>
     <style>
         #demo svg {
             font-size: 48px;
@@ -58,7 +59,8 @@
                 <h3>專注度分析</h3>
                 <div class="report">
                     <div class="today">
-                        <h4>今日 <span>2020/3/30</span></h4>
+                        <h4>今日
+                            <span id="todaydate" class="todaydate">2020/3/30</span></h4>
                         <div class="content">
                             <div class="todo-area">
                                 <p class="green-number">9</p>
@@ -89,10 +91,11 @@
                 </div>
 
                 <div class="chart">
-                    <span class="leftspan" onclick="reduceadte()"></span>
-                    <label id="begintime" class="kbtn"></label>
-                    <span class="rightspan" onclick="adddate()"></span>
-                    <h4>2019.07.07 ~ 2019.07.13 </h4>
+                    <button id="leftspan" class="leftspan" onclick="reduceweek()"></button>
+                    <span id="startweek" class="startweek"></span>
+                    <span id="endweek" class="endweek"></span>
+                    <button id="rightspan" class="rightspan" onclick="addweek()"></button>
+
                     <div class="report">
                         <div class="number">
                             <p>14</p>

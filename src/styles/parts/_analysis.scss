@@ -12,7 +12,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    .today,.week {
+    span.todaydate {
+      opacity: 0.5;
+      left: 5%;
+    }
+    .today,
+    .week {
       width: 48%;
       top: 50px;
     }
@@ -51,24 +56,43 @@
     }
   }
   .chart {
-    span {
+    .startweek {
       font-style: Noto Sans TC;
+      position: absolute;
+      top: 26%;
+      left: 36%;
       opacity: 0.5;
     }
-    span.leftspan {
-      
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 6px 6px 6px 0;
-      border-color: transparent #ffffff transparent transparent;
+    .endweek {
+      font-style: Noto Sans TC;
+      position: absolute;
+      top: 26%;
+      left: 52%;
+      opacity: 0.5;
     }
-    span.rightspan {
+    .leftspan {
+      position: absolute;
+      top: 27%;
+      left: 30%;
+      width: 0px;
+      height: 0px;
+      
+      border-top: 6px solid #304030;
+      border-left: 6px solid #304030;
+      border-bottom: 6px solid #304030;
+      border-right: 6px solid #ffffff;
+    }
+    .rightspan {
+      position: absolute;
+      top: 27%;
+      right: 30%;
+     
       width: 0;
       height: 0;
-      border-style: solid;
-      border-width: 6px 0 6px 6px;
-      border-color: transparent transparent transparent #ffffff;
+      border-top: 6px solid #304030;
+      border-left: 6px solid #ffffff;
+      border-bottom: 6px solid #304030;
+      border-right: 6px solid #304030;
     }
     .number {
       width: 18px;
@@ -77,14 +101,10 @@
       p {
         display: inline-flex;
         height: 130%;
-        top:60px;
+        bottom: -180px;
       }
     }
-    h4 {
-      text-align: center;
-      padding-top: 100px;
-      opacity: 0.5;
-    }
+
     .square {
       display: flex;
       border: solid 1px;
@@ -94,7 +114,7 @@
       border-right: none;
       position: relative;
       left: -20px;
-      bottom: 0;
+      bottom: -120px;
       color: #e8e8e8;
       .square1 {
         border: solid 1px;
