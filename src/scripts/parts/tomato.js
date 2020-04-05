@@ -6,7 +6,7 @@ function init(){
     $(function(){nowDate();});
     
     outputTodolist();
-    $("#add-button").on("click", function() { outputTodolist(); });
+    $("#add-button").on("click", function() { outputTodolist(); });     //button in todolist
     
     $(".green").hide();
     $("#bellSlash").hide();
@@ -23,10 +23,22 @@ function init(){
     $("#orangeCancel").click(function() { greenMode(); });
     $("#greenCancel").click(function() { orangeMode(); });
 
-    $("#finishCheckONE").click(function() { setFinish(0); });
-    $("#finishCheckTWO").click(function() { setFinish(1); });
-    $("#finishCheckTHREE").click(function() { setFinish(2); });
-    $("#finishCheckFOUR").click(function() { setFinish(3); });
+    $("#finishCheckONE").click(function() { 
+        setFinish(0);
+        outputTodolist();
+    });
+    $("#finishCheckTWO").click(function() { 
+        setFinish(1);
+        outputTodolist();
+    });
+    $("#finishCheckTHREE").click(function() {
+        setFinish(2);
+        outputTodolist();
+    });
+    $("#finishCheckFOUR").click(function() {
+        setFinish(3);
+        outputTodolist();
+    });
 
 }
 var countDownNumber = 1500;
@@ -144,9 +156,15 @@ function greenChangeState(param) {
         stopCount();
     }
 }
-
-function outputTodolist() {     //NULL 時不顯示 、一定要重新整理，無法自動更新(刪除、完成時) (新增可以
+//not yet todolist操作無法自動更新(刪除、修改、完成時)，一定要重新整理(新增可以
+function outputTodolist() {     
     var notFinish = getTodolistByStatus(0);
+    if (notFinish.length == 0) {
+        $("#listONE").html("none！");
+        $("#listTWO").html("none！");
+        $("#listTHREE").html("none！");
+        $("#listFOUR").html("none！");
+    }
     for (var i = 0; i < notFinish.length; i++) {
         var readObject = notFinish[i];
         $.each(readObject, function(key, value) {
@@ -165,6 +183,9 @@ function outputTodolist() {     //NULL 時不顯示 、一定要重新整理，�
                 }
             }
         });
+        if (i < 1) { $("#listTWO").html("none！"); }
+        if (i < 2) { $("#listTHREE").html("none！"); }
+        if (i < 3) { $("#listFOUR").html("none！"); }
     }
 }
 
@@ -173,7 +194,7 @@ function setFinish(whichOneFinish) {
     var readObject = notFinish[whichOneFinish];
     $.each(readObject, function(key, value) {
        if (key == "id") {
-            var taskFinish = setFinishTodolist(value);
+            setFinishTodolist(value);
         }
     });     
 }
