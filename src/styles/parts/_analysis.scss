@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding-top: 50px;
     span.todaydate {
       opacity: 0.5;
       left: 5%;
@@ -19,11 +20,9 @@
     .today,
     .week {
       width: 48%;
-      top: 50px;
     }
 
     .content {
-      font-style: Noto Sans TC;
       position: relative;
       display: flex;
       justify-content: space-around;
@@ -55,185 +54,87 @@
       }
     }
   }
-  .chart {
-    .startweek {
-      font-style: Noto Sans TC;
-      position: absolute;
-      top: 26%;
-      left: 36%;
-      opacity: 0.5;
+
+  .chart-date-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    .startweek, .endweek{
+      font-weight: 300;
+      letter-spacing: 2px;
     }
-    .endweek {
-      font-style: Noto Sans TC;
-      position: absolute;
-      top: 26%;
-      left: 52%;
-      opacity: 0.5;
-    }
-    .leftspan {
-      position: absolute;
-      top: 27%;
-      left: 30%;
+    .rightspan, .leftspan {
       width: 0px;
       height: 0px;
-      
-      border-top: 6px solid #304030;
-      border-left: 6px solid #304030;
-      border-bottom: 6px solid #304030;
+      margin: 0 24px;
+      border: 6px solid $color-primary;
+    }
+    .leftspan{
       border-right: 6px solid #ffffff;
     }
-    .rightspan {
-      position: absolute;
-      top: 27%;
-      right: 30%;
-     
-      width: 0;
-      height: 0;
-      border-top: 6px solid #304030;
-      border-left: 6px solid #ffffff;
-      border-bottom: 6px solid #304030;
-      border-right: 6px solid #304030;
+    .divide-sign{
+      margin: 0 12px;
     }
+    .rightspan {
+      border-left: 6px solid #ffffff;
+    }
+  }
+  .chart{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 32px;
     .number {
-      width: 18px;
-      height: 22px;
-      vertical-align: text-bottom;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      margin-right: 14px;
       p {
-        display: inline-flex;
-        height: 130%;
-        bottom: -180px;
+        margin-top: 14px;
       }
     }
-
-    .square {
+    .bar-area {
       display: flex;
-      border: solid 1px;
-      width: 500px;
+      flex-direction: row;
+      align-items: flex-end;
+      width: 532px;
       height: 280px;
+      padding-left: 20px;
+      border: solid 1px;
       border-top: none;
       border-right: none;
-      position: relative;
-      left: -20px;
-      bottom: -120px;
-      color: #e8e8e8;
-      .square1 {
-        border: solid 1px;
+      color: $color-light3;
+      .bar{
+        width: 32px;
+        margin-left: 32px;
         background-color: $color-primary2;
-        width: 20px;
-        height: 90px;
-        position: absolute;
-        left: 60px;
-        top: 189px;
-        border-width: 0px;
-
-        p {
-          text-align: center;
-          opacity: 0.5;
-          color: #e8e8e8;
-          top: 98px;
+        p{
+          position: absolute;
+          bottom: -32px;
         }
       }
-      .square2 {
-        border: solid 1px;
-        background-color: $color-primary2;
-        width: 20px;
-        height: 57px;
-        position: absolute;
-        left: 110px;
-        top: 222px;
-        border-width: 0px;
-
-        p {
-          text-align: center;
-          opacity: 0.5;
-          color: #e8e8e8;
-          top: 65px;
-        }
+      .bar1 {
+        height: 32px;
       }
-      .square3 {
-        border: solid 1px;
-        background-color: $color-primary2;
-        width: 20px;
-        height: 108px;
-        position: absolute;
-        left: 160px;
-        top: 171px;
-        border-width: 0px;
-
-        p {
-          text-align: center;
-          opacity: 0.5;
-          color: #e8e8e8;
-          top: 116px;
-        }
+      .bar2 {
+        height: 64px;
       }
-      .square4 {
-        border: solid 1px;
-        background-color: $color-primary2;
-        width: 20px;
-        height: 33px;
-        position: absolute;
-        left: 210px;
-        top: 246px;
-        border-width: 0px;
-
-        p {
-          text-align: center;
-          opacity: 0.5;
-          color: #e8e8e8;
-          top: 41px;
-        }
+      .bar3 {
+        height: 96px;
       }
-      .square5 {
-        border: solid 1px;
-        background-color: $color-primary2;
-        width: 20px;
-        height: 130px;
-        position: absolute;
-        left: 260px;
-        top: 149px;
-        border-width: 0px;
-
-        p {
-          text-align: center;
-          opacity: 0.5;
-          color: #e8e8e8;
-          top: 138px;
-        }
+      .bar4 {
+        height: 128px;
       }
-      .square6 {
-        border: solid 1px;
-        background-color: $color-primary2;
-        width: 20px;
-        height: 70px;
-        position: absolute;
-        left: 310px;
-        top: 209px;
-        border-width: 0px;
-
-        p {
-          text-align: center;
-          opacity: 0.5;
-          color: #e8e8e8;
-          top: 78px;
-        }
+      .bar5 {
+        height: 160px;
       }
-      .square7 {
-        border: solid 1px;
+      .bar6 {
+        height: 192px;
+      }
+      .bar7 {
         background-color: $color-secondary2;
-        width: 20px;
-        height: 105px;
-        position: absolute;
-        left: 360px;
-        top: 174px;
-        border-width: 0px;
-
-        p {
-          text-align: center;
-          opacity: 0.5;
-          color: #e8e8e8;
-          top: 113px;
-        }
+        height: 224px;
       }
     }
   }

@@ -41,7 +41,7 @@ function getCurrentWeek() {
 	StartDate.setDate(StartDate.getDate() + (7 - w));
 
 	var startweek = document.getElementById("startweek");
-	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate()) + " ~ ";
+	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate());
 
 	var endweek = document.getElementById("endweek");
 	endweek.innerHTML = EndDate.getFullYear() + "." + (GetFormatDate(EndDate.getMonth() + 1)) + "." + GetFormatDate(EndDate.getDate());
@@ -59,7 +59,7 @@ function addweek() {
 	EndDate.setDate(EndDate.getDate() + ((w + 6)));
 
 	var startweek = document.getElementById("startweek");
-	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate()) + " ~ ";
+	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate());
 
 	var endweek = document.getElementById("endweek");
 	endweek.innerHTML = EndDate.getFullYear() + "." + (GetFormatDate(EndDate.getMonth() + 1)) + "." + GetFormatDate(EndDate.getDate());
@@ -78,7 +78,7 @@ function reduceweek() {
 	EndDate.setDate(EndDate.getDate() - ((w + 1)));
 
 	var startweek = document.getElementById("startweek");
-	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate()) + " ~ ";
+	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate());
 
 	var endweek = document.getElementById("endweek");
 	endweek.innerHTML = EndDate.getFullYear() + "." + (GetFormatDate(EndDate.getMonth() + 1)) + "." + GetFormatDate(EndDate.getDate());
