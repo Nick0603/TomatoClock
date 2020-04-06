@@ -13,9 +13,8 @@ var countDownGoing = 0;
 var $countDownTime = $("#clock");
 
 function init(){
-    //window.onload = nowDate;
-    $(function(){nowDate();});
-    
+
+    updateOutputDate();
     outputTodolist();
     $("#add-button").on("click", function() { outputTodolist(); });     //button in todolist
     
@@ -34,41 +33,28 @@ function init(){
     $("#orangeCancel").click(function() { initGreenMode(); });
     $("#greenCancel").click(function() { initOrangeMode(); });
 
-    $("#finishCheckONE").click(function() { 
-        setFinish(0);
-        outputTodolist();
-    });
-    $("#finishCheckTWO").click(function() { 
-        setFinish(1);
-        outputTodolist();
-    });
-    $("#finishCheckTHREE").click(function() {
-        setFinish(2);
-        outputTodolist();
-    });
-    $("#finishCheckFOUR").click(function() {
-        setFinish(3);
-        outputTodolist();
-    });
-
+    $("#finishCheckONE").click(function() { finishWhichOne(0); });
+    $("#finishCheckTWO").click(function() { finishWhichOne(1); });
+    $("#finishCheckTHREE").click(function() { finishWhichOne(2); });
+    $("#finishCheckFOUR").click(function() { finishWhichOne(3); });
 }
 
-function nowDate() {
-    var nowDatetime = new Date();
-    var weekdays = "星期日,星期一,星期二,星期三,星期四,星期五,星期六".split(",");
+function updateOutputDate() {
+    var timeNow = new Date();
+    var weekDays = "星期日,星期一,星期二,星期三,星期四,星期五,星期六".split(",");
 
-    $("#nowDatetimeFront").text(nowDatetime.getFullYear() + "."
-        + (nowDatetime.getMonth() < 10 ? '0' : '') + (nowDatetime.getMonth() + 1) + "."
-        + (nowDatetime.getDate() < 10 ? '0' : '') + nowDatetime.getDate());
+    $("#nowDatetimeFront").text(timeNow.getFullYear() + "."
+        + (timeNow.getMonth() < 10 ? '0' : '') + (timeNow.getMonth() + 1) + "."
+        + (timeNow.getDate() < 10 ? '0' : '') + timeNow.getDate());
 
-    $("#nowDatetimeBack").text(weekdays[nowDatetime.getDay()]
-        + (nowDatetime.getHours() < 10 ? '0' : '') + nowDatetime.getHours() + ":"
-        + (nowDatetime.getMinutes() < 10 ? '0' : '') + nowDatetime.getMinutes());
+    $("#nowDatetimeBack").text(weekDays[timeNow.getDay()]
+        + (timeNow.getHours() < 10 ? '0' : '') + timeNow.getHours() + ":"
+        + (timeNow.getMinutes() < 10 ? '0' : '') + timeNow.getMinutes());
     
-    setTimeout(nowDate, 1000);
+    setTimeout(updateOutputDate, 1000);
 }
 
-function countDownfunc() {
+function countDown() {
     if (countDownNumber == 0) {
         clearTimeout(countDownID);
         if (viewMode) {
@@ -85,14 +71,14 @@ function countDownfunc() {
         $countDownTime.html((countDownMin < 10 ? '0' : '') + countDownMin + ":"
             + (countDownSec < 10 ? '0' : '') + countDownSec);
     
-        countDownID = setTimeout(countDownfunc, 1000);
+        countDownID = setTimeout(countDown, 1000);
     }
 }
 
 function startCount() {
     if (countDownGoing == 0) {
         countDownGoing = 1;
-        countDownfunc();
+        countDown();
     }
 }
 
@@ -160,44 +146,56 @@ function changeGreenState(param) {
 //not yet todolist操作無法自動更新(刪除、修改、完成時)，一定要重新整理(新增可以
 function outputTodolist() {     
     var notFinish = getTodolistByStatus(0);
-    if (notFinish.length == 0) {
-        $("#listONE").html("none！");
-        $("#listTWO").html("none！");
-        $("#listTHREE").html("none！");
-        $("#listFOUR").html("none！");
-    }
+    hideNoUseLi(notFinish.length);
     for (var i = 0; i < notFinish.length; i++) {
         var readObject = notFinish[i];
-        $.each(readObject, function(key, value) {
-           if (key == "name") {
-                if (i == 0) {
-                    $("#listONE").html(value);
-                }
-                else if (i == 1) {
-                    $("#listTWO").html(value);
-                }
-                else if (i == 2) {
-                    $("#listTHREE").html(value);
-                }
-                else if (i == 3) {
-                    $("#listFOUR").html(value);
-                }
-            }
-        });
-        if (i < 1) { $("#listTWO").html("none！"); }
-        if (i < 2) { $("#listTHREE").html("none！"); }
-        if (i < 3) { $("#listFOUR").html("none！"); }
+        if (i == 0) {
+            $("#finishCheckONE").css("opacity", "1");
+            $("#listONE").text(readObject.name);
+        }
+        else if (i == 1) {
+            $("#finishCheckTWO").css("opacity", "1");
+            $("#listTWO").text(readObject.name);
+        }
+        else if (i == 2) {
+            $("#finishCheckTHREE").css("opacity", "1");
+            $("#listTHREE").text(readObject.name);
+        }
+        else if (i == 3) {
+            $("#finishCheckFOUR").css("opacity", "1");
+            $("#listFOUR").text(readObject.name);
+        }
     }
+}
+
+function hideNoUseLi(notFinishNum) {
+    if (notFinishNum == 0) {
+        $("#finishCheckONE").css("opacity", "0");
+        $("#listONE").text("");
+    }
+    if (notFinishNum < 2) {
+        $("#finishCheckTWO").css("opacity", "0");
+        $("#listTWO").text("");
+    }
+    if (notFinishNum < 3) {
+        $("#finishCheckTHREE").css("opacity", "0");
+        $("#listTHREE").text("");
+    }
+    if (notFinishNum < 4) {
+        $("#finishCheckFOUR").css("opacity", "0");
+        $("#listFOUR").text("");
+    }   
 }
 
 function setFinish(whichOneFinish) {
     var notFinish = getTodolistByStatus(0);
     var readObject = notFinish[whichOneFinish];
-    $.each(readObject, function(key, value) {
-       if (key == "id") {
-            setFinishTodolist(value);
-        }
-    });     
+    setFinishTodolist(readObject.id);  
+}
+
+function finishWhichOne(clickedButton) {
+    setFinish(clickedButton);
+    outputTodolist();
 }
 
 export {
