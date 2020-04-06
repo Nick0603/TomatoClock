@@ -1,24 +1,19 @@
 import $ from 'jquery';
 import { setFinishTodolist, getTodolist } from './todolist';
-
+import {
+	getCurrentTime,
+	getTodolistByStatus
+} from "./todolist/model"
 
 
 function init() {
 	console.log('Hello World! Analysis!');
-	//console.log(getTodolist());
-	//console.log(setFinishTodolist(1));
-	//輸入 id 則會將該id的status改成true,成功回傳true,失敗回傳false
-}
 
+}
+window.onload = today();
 window.onload = getCurrentWeek();
 
-document.getElementById("leftspan").onclick = function () {
-	reduceweek();
 
-};
-document.getElementById("rightspan").onclick = function () {
-	addweek();
-};
 
 
 function GetFormatDate(InputValue) {
@@ -26,6 +21,10 @@ function GetFormatDate(InputValue) {
 		InputValue = '0' + InputValue;
 	}
 	return InputValue;
+}
+function today() {
+	var d = new Date();
+	todaydate.innerHTML = d.getFullYear() + "." + GetFormatDate((d.getMonth() + 1)) + "." + GetFormatDate(d.getDate());
 }
 function getCurrentWeek() {
 	var d = new Date();
@@ -35,54 +34,42 @@ function getCurrentWeek() {
 		w = 7
 	}
 	var EndDate = new Date();// 將日期變成目前禮拜的星期六
-	EndDate.setDate(EndDate.getDate() + ((w - 1)));
+	EndDate.setDate(EndDate.getDate() + (7 - w));
 
 	var StartDate = new Date();// 將日期變成目前禮拜的星期日
-	StartDate.setDate(StartDate.getDate() + (7 - w));
+	StartDate.setDate(StartDate.getDate() + (-w));
 
 	var startweek = document.getElementById("startweek");
-	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate()) + " ~ ";
+	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate());
 
 	var endweek = document.getElementById("endweek");
 	endweek.innerHTML = EndDate.getFullYear() + "." + (GetFormatDate(EndDate.getMonth() + 1)) + "." + GetFormatDate(EndDate.getDate());
 }
 
-function addweek() {
-	var d = new Date();
-	var w = d.getDay();
-	if (w == 0) {
-		w = 7
+function todayworking() {
+	var arrStatus = getTodolistByStatus(status)
+	var today_date = today();
+	var finishAt = getCurrentTime();
+	finish_count = 0;
+	doing_count = 0;
+	for (i = 0; i < arrStatus.length; i++) {
+		if (arrStatus[i] == true && today_date == finishAt.date) {
+			finish_count += 1
+		}
+		else {
+			doing_count += 1
+		}
+		document.getElementById("today-finish").innerHTML = finish_count;
+		document.getElementById("today-doing").innerHTML = doing_count;
+
 	}
-	var StartDate = new Date();// 將日期變成下禮拜的星期日
-	StartDate.setDate(StartDate.getDate() + (7 - w));
-	var EndDate = new Date();// 將日期變下禮拜的星期六
-	EndDate.setDate(EndDate.getDate() + ((w + 6)));
-
-	var startweek = document.getElementById("startweek");
-	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate()) + " ~ ";
-
-	var endweek = document.getElementById("endweek");
-	endweek.innerHTML = EndDate.getFullYear() + "." + (GetFormatDate(EndDate.getMonth() + 1)) + "." + GetFormatDate(EndDate.getDate());
 }
 
-function reduceweek() {
-	var d = new Date();
-	var w = d.getDay();
 
-	if (w == 0) {
-		w = 7
-	}
-	var StartDate = new Date();// 將日期變成上禮拜的星期日
-	StartDate.setDate(StartDate.getDate() - (7 + w));
-	var EndDate = new Date();// 將日期變上禮拜的星期六
-	EndDate.setDate(EndDate.getDate() - ((w + 1)));
 
-	var startweek = document.getElementById("startweek");
-	startweek.innerHTML = StartDate.getFullYear() + "." + GetFormatDate(StartDate.getMonth() + 1) + "." + GetFormatDate(StartDate.getDate()) + " ~ ";
-
-	var endweek = document.getElementById("endweek");
-	endweek.innerHTML = EndDate.getFullYear() + "." + (GetFormatDate(EndDate.getMonth() + 1)) + "." + GetFormatDate(EndDate.getDate());
-}
 export {
-	init
+	init,
+	getCurrentTime,
+	getTodolistByStatus
+
 };

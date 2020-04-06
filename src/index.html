@@ -63,12 +63,12 @@
                             <span id="todaydate" class="todaydate">2020/3/30</span></h4>
                         <div class="content">
                             <div class="todo-area">
-                                <p class="green-number">9</p>
+                                <p id="today-doing"class="green-number">9</p>
                                 <p class="description">代辦事項</p>
                             </div>
                             <div class="middle-line"></div>
                             <div class="finish-area">
-                                <p class="orange-number">7</p>
+                                <p id="today-finish" class="orange-number">7</p>
                                 <p class="description">已完成</p>
                             </div>
                         </div>
@@ -77,12 +77,12 @@
                         <h4>本周</h4>
                         <div class="content">
                             <div class="todo-area">
-                                <p class="green-number">54</p>
+                                <p id="week-doing" class="green-number">54</p>
                                 <p class="description">代辦事項</p>
                             </div>
                             <div class="middle-line"></div>
                             <div class="finish-area">
-                                <p class="orange-number">48</p>
+                                <p id="week-finish" class="orange-number">48</p>
                                 <p class="description">已完成</p>
                             </div>
                         </div>
@@ -90,137 +90,137 @@
 
                 </div>
 
-                <div class="chart">
+                <div class="chart-date-picker">
                     <button id="leftspan" class="leftspan" onclick="reduceweek()"></button>
                     <span id="startweek" class="startweek"></span>
+                    <span class="divide-sign">~</span>
                     <span id="endweek" class="endweek"></span>
                     <button id="rightspan" class="rightspan" onclick="addweek()"></button>
-
-                    <div class="report">
-                        <div class="number">
-                            <p>14</p>
-                            <p>12</p>
-                            <p>10</p>
-                            <p>8</p>
-                            <p>6</p>
-                            <p>4</p>
-                            <p>2</p>
-                            <p>0</p>
+                </div>
+                <div class="chart">
+                    <div class="number">
+                        <p>14</p>
+                        <p>12</p>
+                        <p>10</p>
+                        <p>8</p>
+                        <p>6</p>
+                        <p>4</p>
+                        <p>2</p>
+                        <p>0</p>
+                    </div>
+                    <div class="bar-area">
+                        <div class="bar bar1">
+                            <p>7/7</p>
                         </div>
-                        <div class="square">
-                            <div class="square1">
-                                <p>7/7</p>
-                            </div>
-                            <div class="square2">
-                                <p>7/8</p>
-                            </div>
-                            <div class="square3">
-                                <p>7/9</p>
-                            </div>
-                            <div class="square4">
-                                <p>7/10</p>
-                            </div>
-                            <div class="square5">
-                                <p>7/11</p>
-                            </div>
-                            <div class="square6">
-                                <p>7/12</p>
-                            </div>
-                            <div class="square7">
-                                <p>7/13</p>
-                            </div>
+                        <div class="bar bar2">
+                            <p>7/8</p>
+                        </div>
+                        <div class="bar bar3">
+                            <p>7/9</p>
+                        </div>
+                        <div class="bar bar4">
+                            <p>7/10</p>
+                        </div>
+                        <div class="bar bar5">
+                            <p>7/11</p>
+                        </div>
+                        <div class="bar bar6">
+                            <p>7/12</p>
+                        </div>
+                        <div class="bar bar7">
+                            <p>7/13</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="todolist" class="toggle-view todolist">
-                <div class="content">
-                    <div class="top">
-                        <h1>待辦事項</h1>
-                        <div class="top-left">
-                            <button class="left">未完成</button>
-                            <button class="right">已完成</button>
+    </div>
+    <div id="todolist" class="toggle-view todolist">
+        <div class="content">
+            <div class="top">
+                <h1>待辦事項</h1>
+                <div class="top-left">
+                    <button class="left">未完成</button>
+                    <button class="right">已完成</button>
+                </div>
+            </div>
+            <div class="add-container">
+                <input type="text" id="add-text" placeholder="新增待辦事項">
+                <button id="add-button">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <hr class="separate">
+            <ul class="item-list">
+                <li>
+                    <div class="item-block">
+                        <div class="block-left">
+                            <button class="check-btn finished">
+                                <span class="check finished"><i class="fas fa-check"></i></span>
+                            </button>
+                            <h3 class="word">構思番茄鐘UI介面</h3>
                         </div>
+                        <div class="block-right">
+                            <span class="edit"><i class="fas fa-pen"></i></span>
+                            <span class="delete"><i class="fas fa-times"></i></span>
+                        </div>
+
                     </div>
-                    <div class="add-container">
-                        <input type="text" id="add-text" placeholder="新增待辦事項">
-                        <button id="add-button">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                    <hr class="separate">
-                    <ul class="item-list">
-                        <li>
-                            <div class="item-block">
-                                <div class="block-left">
-                                    <button class="check-btn finished">
-                                        <span class="check finished"><i class="fas fa-check"></i></span>
-                                    </button>
-                                    <h3 class="word">構思番茄鐘UI介面</h3>
-                                </div>
-                                <div class="block-right">
-                                    <span class="edit"><i class="fas fa-pen"></i></span>
-                                    <span class="delete"><i class="fas fa-times"></i></span>
-                                </div>
+                    <hr class=" separate">
+                </li>
 
-                            </div>
-                            <hr class=" separate">
-                        </li>
+            </ul>
 
-                    </ul>
+        </div>
+    </div>
+    <div id="tomato" class="tomato">
+        <!--<h3>Hello Tomato</h3>-->
+        <div class="countDown">
+            <div id="clock" class="clock">25:00</div>
 
-                </div>
-            </div>
-            <div id="tomato" class="tomato">
-                <!--<h3>Hello Tomato</h3>-->
-                <div class="countDown">
-                    <div id="clock" class="clock">25:00</div>
-
-                    <button id="greenBell" class="green bell">
-                        <img src="./images/icon-bell.svg" alt="icon-bell.svg">
-                    </button>
-                    <button id="orangeBell" class="orange bell">
-                        <img src="./images/icon-bell.svg" alt="icon-bell.svg">
-                    </button>
+            <button id="greenBell" class="green bell">
+                <img src="./images/icon-bell.svg" alt="icon-bell.svg">
+            </button>
+            <button id="orangeBell" class="orange bell">
+                <img src="./images/icon-bell.svg" alt="icon-bell.svg">
+            </button>
 
 
-                    <button id="greenPause" class="green playAndPause">
-                        <img src="./images/icon-pause--green.svg" alt="icon-pause--green.svg">
-                    </button>
-                    <button id="greenPlay" class="green playAndPause">
-                        <img src="./images/icon-play--green.svg" alt="icon-play--green.svg">
-                    </button>
+            <button id="greenPause" class="green playAndPause">
+                <img src="./images/icon-pause--green.svg" alt="icon-pause--green.svg">
+            </button>
+            <button id="greenPlay" class="green playAndPause">
+                <img src="./images/icon-play--green.svg" alt="icon-play--green.svg">
+            </button>
 
-                    <button id="orangePause" class="orange playAndPause">
-                        <img src="./images/icon-pause--orange.svg" alt="icon-pause--orange.svg">
-                    </button>
-                    <button id="orangePlay" class="orange playAndPause">
-                        <img src="./images/icon-play--orange.svg" alt="icon-play--orange.svg">
-                    </button>
+            <button id="orangePause" class="orange playAndPause">
+                <img src="./images/icon-pause--orange.svg" alt="icon-pause--orange.svg">
+            </button>
+            <button id="orangePlay" class="orange playAndPause">
+                <img src="./images/icon-play--orange.svg" alt="icon-play--orange.svg">
+            </button>
 
 
-                    <button id="greenCancel" class="green cancel">
-                        <img src="./images/icon-cancel.svg" alt="icon-cancel.svg">
-                    </button>
-                    <button id="orangeCancel" class="orange cancel">
-                        <img src="./images/icon-cancel.svg" alt="icon-cancel.svg">
-                    </button>
-                </div>
+            <button id="greenCancel" class="green cancel">
+                <img src="./images/icon-cancel.svg" alt="icon-cancel.svg">
+            </button>
+            <button id="orangeCancel" class="orange cancel">
+                <img src="./images/icon-cancel.svg" alt="icon-cancel.svg">
+            </button>
+        </div>
 
-                <div class="green">
-                    <h2 class="takeaBreak">休息，</h2>
-                    <h3 class="nextEffort">是為了下一次的努力。</h3>
-                </div>
+        <div class="green">
+            <h2 class="takeaBreak">休息，</h2>
+            <h3 class="nextEffort">是為了下一次的努力。</h3>
+        </div>
 
-                <div class="bottom">
-                    <img id="greenTomatoImg" class="green tomatoImg" src="./images/tomato--green.svg"
-                        alt="tomato--green.svg">
-                    <img id="orangeTomatoImg" class="orange tomatoImg" src="./images/tomato--orange.svg"
-                        alt="tomato--orange.svg">
-                </div>
-            </div>
-            <!--<h3>Hello Tomato</h3>-->
-        </main>
+        <div class="bottom">
+            <img id="greenTomatoImg" class="green tomatoImg" src="./images/tomato--green.svg" alt="tomato--green.svg">
+            <img id="orangeTomatoImg" class="orange tomatoImg" src="./images/tomato--orange.svg"
+                alt="tomato--orange.svg">
+        </div>
+    </div>
+    <!--<h3>Hello Tomato</h3>-->
+    </main>
     </div>
     <script src="./index.js"></script>
 </body>
