@@ -1,5 +1,6 @@
 import $ from "jquery";
 import {init as iconInit} from '../../icon';
+import { renderTodolist as tomatoRenderTodolist } from '../tomato';
 
 function renderList(array){
     $("#todolist ul").empty();
@@ -8,8 +9,9 @@ function renderList(array){
         $("#todolist ul").append(
             createItem(id, name, status)
         );
-        iconInit();
     }
+    tomatoRenderTodolist();
+    iconInit();
 }
 
 // demo

@@ -7,9 +7,12 @@ import {
     faTimes,
     faBell,
     faPlus,
+    fas,
     faPen,
     faCheck,
+    faBellSlash,
 } from '@fortawesome/free-solid-svg-icons';
+import { far } from "@fortawesome/free-regular-svg-icons";
 
 const icons = [
     faPlay,
@@ -19,6 +22,9 @@ const icons = [
     faPlus,
     faPen,
     faCheck,
+    faBellSlash,
+    fas,
+    far
 ];
 
 function init(){

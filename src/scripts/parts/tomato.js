@@ -1,179 +1,196 @@
 import $ from 'jquery';
-import { setFinishTodolist, getTodolist } from './todolist';
+import { setFinishTodolist, getTodolistByStatus } from './todolist';
 
-function init(){
-    console.log('Hello World! Tomato!');
-        //console.log(setFinishTodolist(1));
-    //輸入 id 則會將該id的status改成true,成功回傳true,失敗回傳false
-    //console.log(getTodolist());
-}
+const ON = 1;
+const OFF = 2;
+const ORANGE = 'ORANGE';
+const GREEN = 'GREEN';
+const UNFINISH = 0;
 
-window.onload = now_date;       //Uncaught ReferenceError: now_date is not defined at <anonymous>:1:1
-function now_date() {
-    var now_datetime = new Date();
-    var now_datetime_front = document.getElementById("now-datetime_front");
-    var now_datetime_back = document.getElementById("now-datetime_back");
-
-    var weekdays = "星期日,星期一,星期二,星期三,星期四,星期五,星期六".split(",");
-
-    now_datetime_front.innerHTML = now_datetime.getFullYear() + "."
-        + (now_datetime.getMonth() < 10 ? '0' : '') + (now_datetime.getMonth() + 1) + "."
-        + (now_datetime.getDate() < 10 ? '0' : '') + now_datetime.getDate();
-
-    now_datetime_back.innerHTML = weekdays[now_datetime.getDay()]
-        + (now_datetime.getHours() < 10 ? '0' : '') + now_datetime.getHours() + ":"
-        + (now_datetime.getMinutes() < 10 ? '0' : '') + now_datetime.getMinutes();
-    setTimeout("now_date()", 1000);
-}       //load the initial time, didnt update, test by +"///"+now_datetime.getSeconds()
-
-
-//----------count down timer-----------
-
+var viewMode = ORANGE;
 var countDownNumber = 1500;
 var countDownID;
-var countDownGoing = 0;
-//var startTime = new Date().getTime();
-var countDownTime = document.getElementById("clock");
-var orangeGreenMode = true;     //true = its orange(default) mode now
+var countDownGoing = false;
+var $countDownTime = $("#clock");
 
-function countDownfunc() {
+function init(){
 
-    if (countDownNumber == 0) {
-        //alert("倒數結束");
-        countDownTime.innerHTML = "00:00";
+    loopUpdateOutputDate();
+    renderTodolist();
+
+    $(".green").hide();
+    $("#bellSlash").hide();
+    
+    $("#bell").click(function() { changeBellStatus(OFF); });
+    $("#bellSlash").click(function() { changeBellStatus(ON); });
+
+    $("#orangePlay").click(function() { changeOrangeState(ON); });
+    $("#orangePause").click(function() { changeOrangeState(OFF); });
+
+    $("#greenPlay").click(function() { changeGreenState(ON); });
+    $("#greenPause").click(function() { changeGreenState(OFF); });
+    
+    $("#orangeCancel").click(function() { changeToGreenMode(); });
+    $("#greenCancel").click(function() { changeToOrangeMode(); });
+
+    $("#finishCheckONE").click(function() { finishWhichOne(0); });
+    $("#finishCheckTWO").click(function() { finishWhichOne(1); });
+    $("#finishCheckTHREE").click(function() { finishWhichOne(2); });
+    $("#finishCheckFOUR").click(function() { finishWhichOne(3); });
+}
+
+function loopUpdateOutputDate() {
+    var timeNow = new Date();
+    var weekDays = "星期日,星期一,星期二,星期三,星期四,星期五,星期六".split(",");
+
+    $("#nowDatetimeFront").text(timeNow.getFullYear() + "."
+        + (timeNow.getMonth() < 10 ? '0' : '') + (timeNow.getMonth() + 1) + "."
+        + (timeNow.getDate() < 10 ? '0' : '') + timeNow.getDate());
+
+    $("#nowDatetimeBack").text(weekDays[timeNow.getDay()]
+        + (timeNow.getHours() < 10 ? '0' : '') + timeNow.getHours() + ":"
+        + (timeNow.getMinutes() < 10 ? '0' : '') + timeNow.getMinutes());
+    
+    setTimeout(loopUpdateOutputDate, 1000);
+}
+
+function countDown() {
+    if (countDownNumber <= 0) {
         clearTimeout(countDownID);
-        if (orangeGreenMode) {
-            countDownNumber = 300;
-            countDownTime.innerHTML = "05:00";
-            orangeGreenMode = false;
-            greenMode();
-        }else {
-            countDownNumber = 1500;
-            countDownTime.innerHTML = "25:00";
-            orangeGreenMode = true;
-            orangeMode();
+        if (viewMode == ORANGE) {
+            changeToGreenMode();
         }
-        
-    }else {
+        else {
+            changeToOrangeMode();
+        }
+    }
+    else {
         countDownNumber--;
         var countDownMin = Math.floor(countDownNumber / 60);
         var countDownSec = countDownNumber % 60
-        countDownTime.innerHTML= (countDownMin < 10 ? '0' : '') + countDownMin + ":"
-            + (countDownSec < 10 ? '0' : '') + countDownSec;
+        $countDownTime.text((countDownMin < 10 ? '0' : '') + countDownMin + ":"
+            + (countDownSec < 10 ? '0' : '') + countDownSec);
     
-        countDownID = setTimeout(countDownfunc, 1000);
+        countDownID = setTimeout(countDown, 1000);
     }
 }
 
 function startCount() {
-    if (countDownGoing == 0) {
-        countDownGoing = 1;
-        countDownfunc();
+    if (countDownGoing == false) {
+        countDownGoing = true;
+        countDown();
     }
 }
+
 function stopCount() {
     clearTimeout(countDownID);
-    countDownGoing = 0;
+    countDownGoing = false;
 }
 
-$(".green").hide();
-//---------orange mode------------
-
-function orangeMode() {
+function changeToOrangeMode() {
+    countDownNumber = 1500;
+    $countDownTime.text("25:00");
+    stopCount();
     $(".orange").show();
     $(".green").hide();
+    viewMode = ORANGE;
 }
-$("#orangeBell").click(function(){
-    orangeBellfunc();
-});
-var orangeBellState = 0;
-function orangeBellfunc() {
-    if(orangeBellState == 0) {
-        $("#orangeBell").attr("style","background-color: #F08448");
-        orangeBellState = 1;
+
+function changeBellStatus(bellState) {
+    if(bellState == ON) {
+        $("#bell").show();
+        $("#bellSlash").hide();
     }
     else {
-        $("#orangeBell").attr("style","background-color: none");
-        orangeBellState = 0;
+        $("#bellSlash").show();
+        $("#bell").hide();
     }
 }
 
-$("#orangePlay").click(function(){
-    orangeChangeState(1);
-    countDownGoing = 0;
-    startCount();
-});
-$("#orangePause").click(function(){
-    orangeChangeState(2);
-    stopCount();
-});
-function orangeChangeState(param) {
-    if(param == 1) {
+function changeOrangeState(param) {
+    if(param == ON) {
         $("#orangePause").show();
         $("#orangePlay").hide();
+        countDownGoing = false;
+        startCount();
     }
     else {
         $("#orangePause").hide();
         $("#orangePlay").show();
+        stopCount();
     }
 }
-$("#orangeCancel").click(function(){
+
+function changeToGreenMode() {
     countDownNumber = 300;
-    countDownTime.innerHTML = "05:00";
+    $countDownTime.html("05:00");
     stopCount();
-    greenMode();
-});
-
-
-//------------green mode----------------
-
-function greenMode() {
     $(".green").show();
     $(".orange").hide();
-}
-$("#greenBell").click(function(){
-    greenBellfunc();
-});
-var greenBellState = 0;
-function greenBellfunc() {
-    if(greenBellState == 0) {
-        $("#greenBell").attr("style","background-color: #6C9460");
-        greenBellState = 1;
-    }
-    else {
-        $("#greenBell").attr("style","background-color: none");
-        greenBellState = 0;
-    }
+    viewMode = GREEN;
 }
 
-
-$("#greenPlay").click(function(){
-    greenChangeState(1);
-    countDownGoing = 0;
-    startCount();
-});
-$("#greenPause").click(function(){
-    greenChangeState(2);
-    stopCount();
-});
-function greenChangeState(param) {
-    if(param == 1) {
+function changeGreenState(param) {
+    if(param == ON) {
         $("#greenPause").show();
         $("#greenPlay").hide();
+        countDownGoing = false;
+        startCount();
     }
     else {
         $("#greenPause").hide();
         $("#greenPlay").show();
+        stopCount();
     }
 }
-$("#greenCancel").click(function(){
-    countDownNumber = 1500;
-    countDownTime.innerHTML = "25:00";
-    stopCount();
-    orangeMode();
-});
 
+function renderTodolist() {     
+    var notFinish = getTodolistByStatus(UNFINISH);
+    hideAllListItem(notFinish.length);
+    for (var i = 0; i < notFinish.length; i++) {
+        var readObject = notFinish[i];
+        if (i == 0) {
+            $("#finishCheckONE").css("opacity", "1");
+            $("#listONE").text(readObject.name);
+        }
+        else if (i == 1) {
+            $("#finishCheckTWO").css("opacity", "1");
+            $("#listTWO").text(readObject.name);
+        }
+        else if (i == 2) {
+            $("#finishCheckTHREE").css("opacity", "1");
+            $("#listTHREE").text(readObject.name);
+        }
+        else if (i == 3) {
+            $("#finishCheckFOUR").css("opacity", "1");
+            $("#listFOUR").text(readObject.name);
+        }
+    }
+}
+
+function hideAllListItem() {
+    $("#finishCheckONE").css("opacity", "0");
+    $("#finishCheckTWO").css("opacity", "0");
+    $("#finishCheckTHREE").css("opacity", "0");
+    $("#finishCheckFOUR").css("opacity", "0");
+    $("#listONE").text("");
+    $("#listTWO").text("");
+    $("#listTHREE").text("");
+    $("#listFOUR").text("");
+}
+
+function setFinish(whichOneFinish) {
+    var notFinish = getTodolistByStatus(UNFINISH);
+    var readObject = notFinish[whichOneFinish];
+    setFinishTodolist(readObject.id);  
+}
+
+function finishWhichOne(clickedButton) {
+    setFinish(clickedButton);
+    renderTodolist();
+}
 
 export {
-    init
+    init,
+    renderTodolist
 };
