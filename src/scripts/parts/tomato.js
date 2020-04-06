@@ -3,26 +3,26 @@ import { setFinishTodolist, getTodolistByStatus } from './todolist';
 
 const ON = 1;
 const OFF = 2;
-const ORANGE = true;
-const GREEN = false;
+const ORANGE = 'ORANGE';
+const GREEN = 'GREEN';
+const UNFINISH = 0;
 
 var viewMode = ORANGE;
 var countDownNumber = 1500;
 var countDownID;
-var countDownGoing = 0;
+var countDownGoing = false;
 var $countDownTime = $("#clock");
 
 function init(){
 
-    updateOutputDate();
-    outputTodolist();
-    $("#add-button").on("click", function() { outputTodolist(); });     //button in todolist
-    
+    loopUpdateOutputDate();
+    renderTodolist();
+
     $(".green").hide();
     $("#bellSlash").hide();
     
-    $("#bell").click(function() { bellfunc(OFF); });
-    $("#bellSlash").click(function() { bellfunc(ON); });
+    $("#bell").click(function() { changeBellStatus(OFF); });
+    $("#bellSlash").click(function() { changeBellStatus(ON); });
 
     $("#orangePlay").click(function() { changeOrangeState(ON); });
     $("#orangePause").click(function() { changeOrangeState(OFF); });
@@ -30,8 +30,8 @@ function init(){
     $("#greenPlay").click(function() { changeGreenState(ON); });
     $("#greenPause").click(function() { changeGreenState(OFF); });
     
-    $("#orangeCancel").click(function() { initGreenMode(); });
-    $("#greenCancel").click(function() { initOrangeMode(); });
+    $("#orangeCancel").click(function() { changeToGreenMode(); });
+    $("#greenCancel").click(function() { changeToOrangeMode(); });
 
     $("#finishCheckONE").click(function() { finishWhichOne(0); });
     $("#finishCheckTWO").click(function() { finishWhichOne(1); });
@@ -39,7 +39,7 @@ function init(){
     $("#finishCheckFOUR").click(function() { finishWhichOne(3); });
 }
 
-function updateOutputDate() {
+function loopUpdateOutputDate() {
     var timeNow = new Date();
     var weekDays = "星期日,星期一,星期二,星期三,星期四,星期五,星期六".split(",");
 
@@ -51,24 +51,24 @@ function updateOutputDate() {
         + (timeNow.getHours() < 10 ? '0' : '') + timeNow.getHours() + ":"
         + (timeNow.getMinutes() < 10 ? '0' : '') + timeNow.getMinutes());
     
-    setTimeout(updateOutputDate, 1000);
+    setTimeout(loopUpdateOutputDate, 1000);
 }
 
 function countDown() {
-    if (countDownNumber == 0) {
+    if (countDownNumber <= 0) {
         clearTimeout(countDownID);
-        if (viewMode) {
-            initGreenMode();
+        if (viewMode == ORANGE) {
+            changeToGreenMode();
         }
         else {
-            initOrangeMode();
+            changeToOrangeMode();
         }
     }
     else {
         countDownNumber--;
         var countDownMin = Math.floor(countDownNumber / 60);
         var countDownSec = countDownNumber % 60
-        $countDownTime.html((countDownMin < 10 ? '0' : '') + countDownMin + ":"
+        $countDownTime.text((countDownMin < 10 ? '0' : '') + countDownMin + ":"
             + (countDownSec < 10 ? '0' : '') + countDownSec);
     
         countDownID = setTimeout(countDown, 1000);
@@ -76,27 +76,27 @@ function countDown() {
 }
 
 function startCount() {
-    if (countDownGoing == 0) {
-        countDownGoing = 1;
+    if (countDownGoing == false) {
+        countDownGoing = true;
         countDown();
     }
 }
 
 function stopCount() {
     clearTimeout(countDownID);
-    countDownGoing = 0;
+    countDownGoing = false;
 }
 
-function initOrangeMode() {
+function changeToOrangeMode() {
     countDownNumber = 1500;
-    $countDownTime.html("25:00");
+    $countDownTime.text("25:00");
     stopCount();
     $(".orange").show();
     $(".green").hide();
     viewMode = ORANGE;
 }
 
-function bellfunc(bellState) {
+function changeBellStatus(bellState) {
     if(bellState == ON) {
         $("#bell").show();
         $("#bellSlash").hide();
@@ -111,7 +111,7 @@ function changeOrangeState(param) {
     if(param == ON) {
         $("#orangePause").show();
         $("#orangePlay").hide();
-        countDownGoing = 0;
+        countDownGoing = false;
         startCount();
     }
     else {
@@ -121,7 +121,7 @@ function changeOrangeState(param) {
     }
 }
 
-function initGreenMode() {
+function changeToGreenMode() {
     countDownNumber = 300;
     $countDownTime.html("05:00");
     stopCount();
@@ -134,7 +134,7 @@ function changeGreenState(param) {
     if(param == ON) {
         $("#greenPause").show();
         $("#greenPlay").hide();
-        countDownGoing = 0;
+        countDownGoing = false;
         startCount();
     }
     else {
@@ -143,10 +143,10 @@ function changeGreenState(param) {
         stopCount();
     }
 }
-//not yet todolist操作無法自動更新(刪除、修改、完成時)，一定要重新整理(新增可以
-function outputTodolist() {     
-    var notFinish = getTodolistByStatus(0);
-    hideNoUseLi(notFinish.length);
+
+function renderTodolist() {     
+    var notFinish = getTodolistByStatus(UNFINISH);
+    hideAllListItem(notFinish.length);
     for (var i = 0; i < notFinish.length; i++) {
         var readObject = notFinish[i];
         if (i == 0) {
@@ -168,36 +168,29 @@ function outputTodolist() {
     }
 }
 
-function hideNoUseLi(notFinishNum) {
-    if (notFinishNum == 0) {
-        $("#finishCheckONE").css("opacity", "0");
-        $("#listONE").text("");
-    }
-    if (notFinishNum < 2) {
-        $("#finishCheckTWO").css("opacity", "0");
-        $("#listTWO").text("");
-    }
-    if (notFinishNum < 3) {
-        $("#finishCheckTHREE").css("opacity", "0");
-        $("#listTHREE").text("");
-    }
-    if (notFinishNum < 4) {
-        $("#finishCheckFOUR").css("opacity", "0");
-        $("#listFOUR").text("");
-    }   
+function hideAllListItem() {
+    $("#finishCheckONE").css("opacity", "0");
+    $("#finishCheckTWO").css("opacity", "0");
+    $("#finishCheckTHREE").css("opacity", "0");
+    $("#finishCheckFOUR").css("opacity", "0");
+    $("#listONE").text("");
+    $("#listTWO").text("");
+    $("#listTHREE").text("");
+    $("#listFOUR").text("");
 }
 
 function setFinish(whichOneFinish) {
-    var notFinish = getTodolistByStatus(0);
+    var notFinish = getTodolistByStatus(UNFINISH);
     var readObject = notFinish[whichOneFinish];
     setFinishTodolist(readObject.id);  
 }
 
 function finishWhichOne(clickedButton) {
     setFinish(clickedButton);
-    outputTodolist();
+    renderTodolist();
 }
 
 export {
-    init
+    init,
+    renderTodolist
 };

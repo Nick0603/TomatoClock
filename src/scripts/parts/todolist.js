@@ -7,7 +7,7 @@ import {
     storeNote,
     getTodolist,
     deleteItemById,
-    setFinishTodolist,
+    setFinishTodolist as _setFinishTodolist,
     editItemById,
     getTodolistByStatus
 } from "./todolist/model";
@@ -51,7 +51,11 @@ function addNote() {
 
 function checkItem(id) {
     var id = $(this).attr("value");
-    if (setFinishTodolist(id)) {
+    setFinishTodolist(id);
+}
+
+function setFinishTodolist(id){
+    if (_setFinishTodolist(id)) {
         showNotFinishList();
     }
 }
