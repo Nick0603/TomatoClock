@@ -134,13 +134,16 @@
 	}
 
 	.bottomPic {
+		position: absolute;
+		left: 50%;
+		bottom: -2px;
+		width: 100%;
+		transform: translate(-50%, 0);
 		display: flex;
 		justify-content: center;
 		.tomatoImg {
-			position: fixed;
-			width: 991px;
-			height: 316px;
-			bottom: -2px;
+			max-width: 991px;
+			min-height: 316px;
 		}
 	}
 }
