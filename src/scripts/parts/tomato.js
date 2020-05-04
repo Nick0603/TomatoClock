@@ -12,11 +12,13 @@ var countDownNumber = 1500;
 var countDownID;
 var countDownGoing = false;
 var $countDownTime = $("#clock");
+var sound = ON;
 
 function init(){
 
     loopUpdateOutputDate();
     renderTodolist();
+    notify();
 
     $(".green").hide();
     $("#bellSlash").hide();
@@ -39,6 +41,22 @@ function init(){
     $("#finishCheckFOUR").click(function() { finishWhichOne(3); });
 }
 
+function notify(param) {
+    if (Notification.permission === 'default' || Notification.permission === 'undefined') {
+        Notification.requestPermission(function(permission) {
+            if (permission === 'granted') {
+                var notification = new Notification('已開啟通知！');
+            }
+        });
+    }
+    if (param == ORANGE){
+        new Notification('開始計時！加油！');
+    }
+    else if (param == GREEN){
+        new Notification('休息一下吧！');
+    }
+}
+
 function loopUpdateOutputDate() {
     var timeNow = new Date();
     var weekDays = "星期日,星期一,星期二,星期三,星期四,星期五,星期六".split(",");
@@ -56,6 +74,7 @@ function loopUpdateOutputDate() {
 
 function countDown() {
     if (countDownNumber <= 0) {
+        audioControl(sound);
         clearTimeout(countDownID);
         if (viewMode == ORANGE) {
             changeToGreenMode();
@@ -98,12 +117,20 @@ function changeToOrangeMode() {
 
 function changeBellStatus(bellState) {
     if(bellState == ON) {
+        sound = ON;
         $("#bell").show();
         $("#bellSlash").hide();
     }
     else {
+        sound = OFF;
         $("#bellSlash").show();
         $("#bell").hide();
+    }
+}
+
+function audioControl(param) {
+    if(param == ON) {
+        $("#audioNotification")[0].play();
     }
 }
 
@@ -113,6 +140,8 @@ function changeOrangeState(param) {
         $("#orangePlay").hide();
         countDownGoing = false;
         startCount();
+        audioControl(sound);
+        notify(viewMode);
     }
     else {
         $("#orangePause").hide();
@@ -128,6 +157,7 @@ function changeToGreenMode() {
     $(".green").show();
     $(".orange").hide();
     viewMode = GREEN;
+    notify(viewMode);
 }
 
 function changeGreenState(param) {
@@ -136,6 +166,7 @@ function changeGreenState(param) {
         $("#greenPlay").hide();
         countDownGoing = false;
         startCount();
+        audioControl(sound);
     }
     else {
         $("#greenPause").hide();
